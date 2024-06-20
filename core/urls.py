@@ -1,10 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from . import views
 from .views import (
     CidadeViewSet, LocalizacaoViewSet, UsuarioViewSet, PostoCombustivelViewSet,
     TipoCombustivelViewSet, PrecoCombustivelViewSet, FotoVerificacaoViewSet,
     AvaliacaoViewSet, ComentarioViewSet, BorrachariaViewSet, OficinaMecanicaViewSet
 )
+
 
 router = DefaultRouter()
 router.register(r'cidades', CidadeViewSet)
@@ -21,4 +23,5 @@ router.register(r'oficinas_mecanicas', OficinaMecanicaViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', views.home, name='home'),  # URL para a view 'home'
 ]

@@ -10,6 +10,7 @@ from .serializers import (
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
 from django.shortcuts import render
+from django.http import HttpResponse
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -54,6 +55,12 @@ class BorrachariaViewSet(viewsets.ModelViewSet):
 class OficinaMecanicaViewSet(viewsets.ModelViewSet):
     queryset = OficinaMecanica.objects.all()
     serializer_class = OficinaMecanicaSerializer
+
+# gasfinder/views.py
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Hello, this is the home page!")
 
 def custom_404(request, exception):
     return render(request, 'core/404.html', status=404)
