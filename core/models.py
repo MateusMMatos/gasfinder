@@ -99,7 +99,7 @@ class Desconto(models.Model):
         return f"{self.posto} - {self.percentual}%"
 
 class CodigoDesconto(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     desconto = models.ForeignKey(Desconto, on_delete=models.CASCADE)
     codigo = models.CharField(max_length=10, unique=True)
     usado = models.BooleanField(default=False)
