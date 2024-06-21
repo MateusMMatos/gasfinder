@@ -1,6 +1,4 @@
 from rest_framework import viewsets
-from django.http import JsonResponse
-from django.views import View
 from .models import (
     Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
     PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
@@ -12,9 +10,13 @@ from .serializers import (
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
 from django.shortcuts import render, HttpResponseRedirect
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from django.http import JsonResponse
+from .models import PostoCombustivel, Desconto
+from django.views import View
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -59,9 +61,6 @@ class BorrachariaViewSet(viewsets.ModelViewSet):
 class OficinaMecanicaViewSet(viewsets.ModelViewSet):
     queryset = OficinaMecanica.objects.all()
     serializer_class = OficinaMecanicaSerializer
-
-def home(request):
-    return HttpResponse("Hello, this is the home page!")
 
 def custom_404(request, exception):
     return render(request, 'core/404.html', status=404)
@@ -108,6 +107,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
+
 
 class PostosListView(View):
     def get(self, request, *args, **kwargs):
