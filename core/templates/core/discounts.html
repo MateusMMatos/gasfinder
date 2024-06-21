@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Descontos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Gas Finder - Descontos</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'descontos' %}">Descontos</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'registrar' %}">Registrar</a>
+            {% endif %}
+        </nav>
+    </header>
+    <div id="discounts">
+        <h2>Postos com Desconto</h2>
+        <ul>
+            {% for desconto in descontos %}
+                <li>{{ desconto.posto.nome }} - {{ desconto.percentual }}% - {{ desconto.descricao }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
