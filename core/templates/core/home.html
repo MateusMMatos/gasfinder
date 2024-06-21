@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Home</title>
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script>
@@ -54,8 +55,6 @@
     <div id="sidebar" style="width: 30%; float: right;">
         <h2>Postos de Combustível</h2>
         <ul id="postos-list"></ul>
-        <h2>Descontos</h2>
-        <ul id="descontos-list"></ul>
     </div>
 </body>
 </html>

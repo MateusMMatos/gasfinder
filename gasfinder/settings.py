@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', '12d@#4030M')
 
 # Definindo o modo DEBUG para produção
-DEBUG = False
+DEBUG = True
 
 # Configurando os hosts permitidos
 ALLOWED_HOSTS = ['gasfinderr-b2ff1682b63d.herokuapp.com', 'localhost', '127.0.0.1']
@@ -46,7 +46,7 @@ ROOT_URLCONF = 'gasfinder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'core' / 'templates'],
+        'DIRS': [BASE_DIR / 'core' / 'templates' / 'core'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
