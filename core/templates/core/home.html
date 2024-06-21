@@ -16,23 +16,17 @@
             fetch('/api/postos/')
                 .then(response => response.json())
                 .then(data => {
+                    const postosList = document.getElementById('postos-list');
                     data.forEach(posto => {
                         new google.maps.Marker({
                             position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
                             map: map,
                             title: posto.nome
                         });
-                    });
-                });
 
-            fetch('/api/descontos/')
-                .then(response => response.json())
-                .then(data => {
-                    const descontosList = document.getElementById('descontos-list');
-                    data.forEach(desconto => {
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${desconto.posto__nome} - ${desconto.percentual}%`;
-                        descontosList.appendChild(listItem);
+                        listItem.textContent = `${posto.nome} - ${posto.localizacao__latitude}, ${posto.localizacao__longitude}`;
+                        postosList.appendChild(listItem);
                     });
                 });
         }
