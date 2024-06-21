@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from django.http import JsonResponse
+from django.views import View
 from .models import (
     Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
     PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
@@ -10,7 +12,6 @@ from .serializers import (
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
 from django.shortcuts import render, HttpResponseRedirect
-from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
@@ -107,3 +108,13 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
+
+class PostosListView(View):
+    def get(self, request, *args, **kwargs):
+        postos = PostoCombustivel.objects.all().values('nome', 'localizacao__latitude', 'localizacao__longitude')
+        return JsonResponse(list(postos), safe=False)
+
+class DescontosListView(View):
+    def get(self, request, *args, **kwargs):
+        descontos = Desconto.objects.all().values('posto__nome', 'percentual', 'descricao')
+        return JsonResponse(list(descontos), safe=False)

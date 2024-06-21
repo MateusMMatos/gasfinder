@@ -4,7 +4,7 @@ from .views import (
     CidadeViewSet, LocalizacaoViewSet, UsuarioViewSet, PostoCombustivelViewSet, TipoCombustivelViewSet,
     PrecoCombustivelViewSet, FotoVerificacaoViewSet, AvaliacaoViewSet, ComentarioViewSet,
     BorrachariaViewSet, OficinaMecanicaViewSet, home_view, discounts_view, register_view,
-    login_view, logout_view
+    login_view, logout_view, PostosListView, DescontosListView
 )
 
 router = DefaultRouter()
@@ -26,5 +26,7 @@ urlpatterns = [
     path('registrar/', register_view, name='registrar'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('api/postos/', PostosListView.as_view(), name='api_postos'),
+    path('api/descontos/', DescontosListView.as_view(), name='api_descontos'),
     path('api/', include(router.urls)),
 ]
