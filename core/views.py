@@ -1,16 +1,19 @@
 from rest_framework import viewsets
 from .models import (
-    Cidade, Localizacao, Usuario, PostoCombustivel, TipoCombustivel,
+    Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
     PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
-    Borracharia, OficinaMecanica
+    Borracharia, OficinaMecanica, Desconto, CodigoDesconto
 )
 from .serializers import (
     CidadeSerializer, LocalizacaoSerializer, UsuarioSerializer, PostoCombustivelSerializer,
     TipoCombustivelSerializer, PrecoCombustivelSerializer, FotoVerificacaoSerializer,
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse
+from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -21,7 +24,7 @@ class LocalizacaoViewSet(viewsets.ModelViewSet):
     serializer_class = LocalizacaoSerializer
 
 class UsuarioViewSet(viewsets.ModelViewSet):
-    queryset = Usuario.objects.all()
+    queryset = UsuarioProfile.objects.all()
     serializer_class = UsuarioSerializer
 
 class PostoCombustivelViewSet(viewsets.ModelViewSet):
@@ -56,9 +59,6 @@ class OficinaMecanicaViewSet(viewsets.ModelViewSet):
     queryset = OficinaMecanica.objects.all()
     serializer_class = OficinaMecanicaSerializer
 
-# gasfinder/views.py
-from django.http import HttpResponse
-
 def home(request):
     return HttpResponse("Hello, this is the home page!")
 
@@ -67,3 +67,43 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'core/500.html', status=500)
+
+def home_view(request):
+    postos = PostoCombustivel.objects.all()
+    context = {
+        'postos': postos,
+    }
+    return render(request, 'home.html', context)
+
+def discounts_view(request):
+    descontos = Desconto.objects.all()
+    context = {
+        'descontos': descontos,
+    }
+    return render(request, 'discounts.html', context)
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return HttpResponseRedirect(reverse('home'))
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))

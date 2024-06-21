@@ -3,6 +3,38 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -25.363, lng: 131.044},
+                zoom: 10
+            });
+
+            fetch('/api/postos/')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(posto => {
+                        new google.maps.Marker({
+                            position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
+                            map: map,
+                            title: posto.nome
+                        });
+                    });
+                });
+
+            fetch('/api/descontos/')
+                .then(response => response.json())
+                .then(data => {
+                    const descontosList = document.getElementById('descontos-list');
+                    data.forEach(desconto => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${desconto.posto__nome} - ${desconto.percentual}%`;
+                        descontosList.appendChild(listItem);
+                    });
+                });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -18,17 +50,10 @@
             {% endif %}
         </nav>
     </header>
-    <div id="map">
-        <!-- Integração do mapa aqui -->
-    </div>
-    <div id="sidebar">
+    <div id="map" style="height: 500px; width: 70%; float: left;"></div>
+    <div id="sidebar" style="width: 30%; float: right;">
         <h2>Postos de Combustível</h2>
-        <ul>
-            {% for posto in postos %}
-                <li>{{ posto.nome }} - R$ {{ posto.preco_combustivel_set.first.valor }} - {{ posto.localizacao.endereco }}</li>
-            {% endfor %}
-        </ul>
+        <ul id="postos-list"></ul>
     </div>
-    <script src="{% static 'js/map.js' %}"></script>
 </body>
 </html>
