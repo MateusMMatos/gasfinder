@@ -1,0 +1,25 @@
+/* home.css */
+#map {
+    height: 70vh;
+    width: 100%;
+}
+
+#sidebar {
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#postos-list {
+    list-style: none;
+    padding: 0;
+}
+
+#postos-list li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#postos-list li:hover {
+    background-color: #f0f0f0;
+}

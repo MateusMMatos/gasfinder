@@ -1,0 +1,10 @@
+/* capture_image.css */
+video, canvas {
+    display: block;
+    margin: 1rem auto;
+}
+
+button {
+    display: block;
+    margin: 1rem auto;
+}

@@ -1,0 +1,14 @@
+/* discounts.css */
+#descontos-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#descontos-list li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#descontos-list li:hover {
+    background-color: #f0f0f0;
+}
