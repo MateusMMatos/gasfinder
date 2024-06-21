@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Cidade, Localizacao, Usuario, PostoCombustivel, TipoCombustivel, PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario, Borracharia, OficinaMecanica
+from .models import Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel, PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario, Borracharia, OficinaMecanica
 
 admin.site.register(Cidade)
 admin.site.register(Localizacao)
-admin.site.register(Usuario)
+admin.site.register(UsuarioProfile)
 admin.site.register(PostoCombustivel)
 admin.site.register(TipoCombustivel)
 admin.site.register(PrecoCombustivel)

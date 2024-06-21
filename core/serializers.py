@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (
-    Cidade, Localizacao, Usuario, PostoCombustivel, TipoCombustivel,
+    Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
     PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
     Borracharia, OficinaMecanica
 )
@@ -17,7 +17,7 @@ class LocalizacaoSerializer(serializers.ModelSerializer):
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
+        model = UsuarioProfile
         fields = '__all__'
 
 class PostoCombustivelSerializer(serializers.ModelSerializer):
