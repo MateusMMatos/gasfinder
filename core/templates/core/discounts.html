@@ -2,11 +2,12 @@
 <html>
 <head>
     <title>Descontos</title>
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
-        <h1>Gas Finder - Descontos</h1>
+        <h1>Descontos</h1>
         <nav>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'descontos' %}">Descontos</a>
@@ -18,11 +19,10 @@
             {% endif %}
         </nav>
     </header>
-    <div id="descontos" style="width: 100%;">
-        <h2>Descontos e Recompensas</h2>
-        <ul id="descontos-list">
+    <div id="descontos-list">
+        <ul>
             {% for desconto in descontos %}
-                <li>{{ desconto.posto.nome }} - {{ desconto.percentual }}%</li>
+                <li>{{ desconto.posto.nome }} - {{ desconto.percentual }}% - {{ desconto.descricao }}</li>
             {% endfor %}
         </ul>
     </div>

@@ -50,7 +50,7 @@ class PrecoCombustivel(models.Model):
         return f"{self.posto} - {self.tipo_combustivel} - {self.valor}"
 
 class FotoVerificacao(models.Model):
-    imagem = models.ImageField(upload_to='verificacoes/')
+    imagem = models.ImageField(upload_to='verificacoes/', null=True, blank=True)
     data_hora_upload = models.DateTimeField(auto_now_add=True)
     preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
 
