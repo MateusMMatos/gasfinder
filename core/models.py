@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Cidade(models.Model):
     nome = models.CharField(max_length=100)
@@ -17,15 +18,13 @@ class Localizacao(models.Model):
     def __str__(self):
         return f"{self.endereco}, {self.cidade}"
 
-class Usuario(models.Model):
-    nome = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100)
+class UsuarioProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     data_cadastro = models.DateField(auto_now_add=True)
-    email = models.EmailField(unique=True)
     localizacao = models.ForeignKey(Localizacao, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.nome
+        return self.user.username
 
 class PostoCombustivel(models.Model):
     nome = models.CharField(max_length=100)
@@ -51,17 +50,17 @@ class PrecoCombustivel(models.Model):
         return f"{self.posto} - {self.tipo_combustivel} - {self.valor}"
 
 class FotoVerificacao(models.Model):
-    caminho_arquivo = models.CharField(max_length=255)
+    imagem = models.ImageField(upload_to='verificacoes/')
     data_hora_upload = models.DateTimeField(auto_now_add=True)
     preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.preco} - {self.caminho_arquivo}"
+        return f"{self.preco} - {self.imagem}"
 
 class Avaliacao(models.Model):
     nota = models.IntegerField()
     comentario = models.TextField(null=True, blank=True)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -70,7 +69,7 @@ class Avaliacao(models.Model):
 class Comentario(models.Model):
     texto = models.TextField()
     data_hora = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
 
     def __str__(self):

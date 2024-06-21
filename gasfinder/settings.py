@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '12d@#4030M')
 DEBUG = False
 
 # Configurando os hosts permitidos
-ALLOWED_HOSTS = ['gasfinderr.herokuapp.com']  # Substitua pelo nome do seu app no Heroku
+ALLOWED_HOSTS = ['gasfinderr-b2ff1682b63d.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Aplicativos instalados
 INSTALLED_APPS = [
