@@ -88,3 +88,21 @@ class OficinaMecanica(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class Desconto(models.Model):
+    posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
+    percentual = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    descricao = models.TextField(null=True, blank=True)
+    imagem_presente = models.ImageField(upload_to='presentes/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.posto} - {self.percentual}%"
+
+class CodigoDesconto(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    desconto = models.ForeignKey(Desconto, on_delete=models.CASCADE)
+    codigo = models.CharField(max_length=10, unique=True)
+    usado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.usuario} - {self.desconto} - {self.codigo}"
