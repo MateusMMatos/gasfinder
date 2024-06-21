@@ -4,6 +4,7 @@
     <title>Home</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script>
         function initMap() {
@@ -51,8 +52,8 @@
             {% endif %}
         </nav>
     </header>
-    <div id="map" style="height: 500px; width: 70%; float: left;"></div>
-    <div id="sidebar" style="width: 30%; float: right;">
+    <div id="map" style="margin-right: 320px;"></div>
+    <div id="sidebar">
         <h2>Postos de Combustível</h2>
         <ul id="postos-list"></ul>
     </div>
