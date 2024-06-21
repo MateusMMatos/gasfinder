@@ -9,14 +9,17 @@ from .serializers import (
     TipoCombustivelSerializer, PrecoCombustivelSerializer, FotoVerificacaoSerializer,
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
-from .models import PostoCombustivel, Desconto
+from .models import PostoCombustivel, Desconto, FotoVerificacao
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+import base64
+from django.core.files.base import ContentFile
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -107,6 +110,17 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
+
+@csrf_exempt
+def capture_image(request):
+    if request.method == 'POST':
+        imagem_data = request.POST.get('imagem')
+        format, imgstr = imagem_data.split(';base64,') 
+        ext = format.split('/')[-1] 
+        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+        FotoVerificacao.objects.create(imagem=data)
+        return redirect('home')
+    return render(request, 'capture_image.html')
 
 
 class PostosListView(View):
