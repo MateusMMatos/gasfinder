@@ -49,30 +49,20 @@ class PrecoCombustivel(models.Model):
     def __str__(self):
         return f"{self.posto} - {self.tipo_combustivel} - {self.valor}"
 
-class FotoVerificacao(models.Model):
-    imagem = models.ImageField(upload_to='verificacoes/', null=True, blank=True)
-    data_hora_upload = models.DateTimeField(auto_now_add=True)
-    preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    verificado = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.preco} - {self.imagem}"
-    
 class Borracharia(models.Model):
     nome = models.CharField(max_length=100)
     localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
-    
+
 class OficinaMecanica(models.Model):
     nome = models.CharField(max_length=100)
     localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
-    
+
 class Avaliacao(models.Model):
     nota = models.IntegerField()
     comentario = models.TextField(null=True, blank=True)
@@ -121,3 +111,13 @@ class PontuacaoUsuario(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - {self.pontos} pontos"
+
+class FotoVerificacao(models.Model):
+    imagem = models.ImageField(upload_to='verificacoes/', null=True, blank=True)
+    data_hora_upload = models.DateTimeField(auto_now_add=True)
+    preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  # Adicione default aqui
+    verificado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.preco} - {self.imagem}"
