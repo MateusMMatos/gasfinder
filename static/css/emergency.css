@@ -1,0 +1,49 @@
+/* emergency.css */
+#emergency-container {
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 5px solid #000000; /* Borda preta */
+    width: 80%;
+    margin: 40px auto; /* Centralizar o contêiner */
+    border-radius: 25px; /* Arredondar as bordas */
+    box-sizing: border-box;
+}
+
+#emergency-container h2 {
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+#emergency-list {
+    list-style: none;
+    padding: 0;
+}
+
+#emergency-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    color: #000;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#emergency-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.emergency-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.emergency-info .service {
+    font-weight: bold;
+}
+
+.emergency-info .number {
+    font-size: 0.9rem;
+}

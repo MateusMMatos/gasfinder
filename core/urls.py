@@ -4,7 +4,7 @@ from .views import (
     CidadeViewSet, LocalizacaoViewSet, UsuarioViewSet, PostoCombustivelViewSet, TipoCombustivelViewSet,
     PrecoCombustivelViewSet, FotoVerificacaoViewSet, AvaliacaoViewSet, ComentarioViewSet,
     BorrachariaViewSet, OficinaMecanicaViewSet, home_view, discounts_view, register_view,
-    login_view, logout_view, PostosListView, DescontosListView, capture_image
+    login_view, logout_view, PostosListView, DescontosListView, capture_image, emergency_view
 )
 
 router = DefaultRouter()
@@ -30,5 +30,5 @@ urlpatterns = [
     path('api/descontos/', DescontosListView.as_view(), name='api_descontos'),
     path('api/', include(router.urls)),
     path('capture/', capture_image, name='capture_image'),
+    path('emergency/', emergency_view, name='emergency'),
 ]
-  

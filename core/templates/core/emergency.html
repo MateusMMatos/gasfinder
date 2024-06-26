@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Números de Emergência</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/emergency.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul style="flex-grow: 1;">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'descontos' %}">Descontos</a></li>
+                <li><a href="{% url 'emergency' %}">Emergência</a></li>
+            </ul>
+        </nav>
+        <h1>Gas Finder</h1>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'registrar' %}">Registrar</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div id="emergency-container">
+        <h2>Números de Emergência</h2>
+        <ul id="emergency-list">
+            <li>
+                <div class="emergency-info">
+                    <div class="service">Polícia</div>
+                    <div class="number">190</div>
+                </div>
+            </li>
+            <li>
+                <div class="emergency-info">
+                    <div class="service">Guincho</div>
+                    <div class="number">0800-123-456</div>
+                </div>
+            </li>
+            <li>
+                <div class="emergency-info">
+                    <div class="service">Bombeiros</div>
+                    <div class="number">193</div>
+                </div>
+            </li>
+            <!-- Adicione mais serviços conforme necessário -->
+        </ul>
+    </div>
+</body>
+</html>

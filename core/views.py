@@ -107,6 +107,9 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+def emergency_view(request):
+    return render(request, 'emergency.html')
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
