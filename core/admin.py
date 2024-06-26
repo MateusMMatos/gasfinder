@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.db.models import F
-from .models import (Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel, PrecoCombustivel, 
-                     FotoVerificacao, Avaliacao, Comentario, Borracharia, OficinaMecanica, Desconto, CodigoDesconto, PontuacaoUsuario)
+from .models import (
+    Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel, PrecoCombustivel, 
+    FotoVerificacao, Avaliacao, Comentario, Borracharia, OficinaMecanica, Desconto, CodigoDesconto, PontuacaoUsuario
+)
 
 @admin.register(Cidade)
 class CidadeAdmin(admin.ModelAdmin):
