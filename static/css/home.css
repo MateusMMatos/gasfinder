@@ -16,7 +16,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: 5px solid #000000; /* Borda preta */
     width: 320px; /* Aumenta a largura */
-    height: 68vh; /* Altura */
+    height: 70vh; /* Altura */
     display: inline-block;
     vertical-align: top;
     border-radius: 25px; /* Arredondar as bordas da barra lateral */
@@ -41,10 +41,45 @@
 }
 
 #postos-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 0.5rem;
     border-bottom: 1px solid #ddd;
+    background-color: #c4c4c4;
+    color: #000;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 #postos-list li:hover {
-    background-color: #f0f0f0;
+    background-color: #b0b0b0;
 }
+
+.posto-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.posto-info .nome {
+    font-weight: bold;
+}
+
+.posto-info .endereco {
+    font-size: 0.9rem;
+}
+
+.posto-icon {
+    margin-right: 10px;
+}
+
+.posto-desconto {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.posto-desconto .seta {
+    margin-left: 5px;
+}
+

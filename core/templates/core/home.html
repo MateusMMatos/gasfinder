@@ -16,7 +16,6 @@
             fetch('/api/postos/')
                 .then(response => response.json())
                 .then(data => {
-                    const postosList = document.getElementById('postos-list');
                     data.forEach(posto => {
                         new google.maps.Marker({
                             position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
@@ -25,8 +24,35 @@
                         });
 
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${posto.nome} - ${posto.localizacao__latitude}, ${posto.localizacao__longitude}`;
-                        postosList.appendChild(listItem);
+
+                        const postoInfo = document.createElement('div');
+                        postoInfo.classList.add('posto-info');
+
+                        const nome = document.createElement('div');
+                        nome.classList.add('nome');
+                        nome.textContent = posto.nome;
+
+                        const endereco = document.createElement('div');
+                        endereco.classList.add('endereco');
+                        endereco.textContent = `${posto.localizacao__latitude}, ${posto.localizacao__longitude}`;
+
+                        postoInfo.appendChild(nome);
+                        postoInfo.appendChild(endereco);
+
+                        const postoDesconto = document.createElement('div');
+                        postoDesconto.classList.add('posto-desconto');
+                        postoDesconto.textContent = "5%";
+
+                        const setaIcon = document.createElement('span');
+                        setaIcon.classList.add('seta');
+                        setaIcon.innerHTML = '↔'; // substitua por um ícone real, se necessário
+
+                        postoDesconto.appendChild(setaIcon);
+
+                        listItem.appendChild(postoInfo);
+                        listItem.appendChild(postoDesconto);
+
+                        document.getElementById('postos-list').appendChild(listItem);
                     });
                 });
         }
