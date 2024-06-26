@@ -53,6 +53,8 @@ class FotoVerificacao(models.Model):
     imagem = models.ImageField(upload_to='verificacoes/', null=True, blank=True)
     data_hora_upload = models.DateTimeField(auto_now_add=True)
     preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    verificado = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.preco} - {self.imagem}"
@@ -61,10 +63,12 @@ class Avaliacao(models.Model):
     nota = models.IntegerField()
     comentario = models.TextField(null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
+    posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE, null=True, blank=True)
+    borracharia = models.ForeignKey(Borracharia, on_delete=models.CASCADE, null=True, blank=True)
+    oficina_mecanica = models.ForeignKey(OficinaMecanica, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.usuario} - {self.posto} - {self.nota}"
+        return f"{self.usuario} - {self.nota}"
 
 class Comentario(models.Model):
     texto = models.TextField()
@@ -94,6 +98,10 @@ class Desconto(models.Model):
     percentual = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
     imagem_presente = models.ImageField(upload_to='presentes/', null=True, blank=True)
+    validade = models.DateField(null=True, blank=True)
+    condicoes = models.TextField(null=True, blank=True)
+    requer_pontos = models.BooleanField(default=False)
+    pontos_necessarios = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.posto} - {self.percentual}%"
@@ -106,3 +114,10 @@ class CodigoDesconto(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - {self.desconto} - {self.codigo}"
+
+class PontuacaoUsuario(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    pontos = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.usuario} - {self.pontos} pontos"
