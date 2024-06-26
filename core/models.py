@@ -58,7 +58,21 @@ class FotoVerificacao(models.Model):
 
     def __str__(self):
         return f"{self.preco} - {self.imagem}"
+    
+class Borracharia(models.Model):
+    nome = models.CharField(max_length=100)
+    localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome
+    
+class OficinaMecanica(models.Model):
+    nome = models.CharField(max_length=100)
+    localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
+    
 class Avaliacao(models.Model):
     nota = models.IntegerField()
     comentario = models.TextField(null=True, blank=True)
@@ -79,20 +93,6 @@ class Comentario(models.Model):
     def __str__(self):
         return f"{self.usuario} - {self.posto}"
 
-class Borracharia(models.Model):
-    nome = models.CharField(max_length=100)
-    localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nome
-
-class OficinaMecanica(models.Model):
-    nome = models.CharField(max_length=100)
-    localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nome
-    
 class Desconto(models.Model):
     posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
     percentual = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
