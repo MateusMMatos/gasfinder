@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <title>Home</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script>
         function initMap() {
@@ -40,15 +42,15 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul style="flex-grow: 1;">
+        <nav class="left">
+            <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'descontos' %}">Descontos</a></li>
                 <li><a href="{% url 'emergency' %}">Emergência</a></li>
             </ul>
         </nav>
-        <h1>Gas Finder</h1>
-        <nav>
+        <h1>GasFinder</h1>
+        <nav class="right">
             <ul>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>

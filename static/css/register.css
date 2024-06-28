@@ -4,7 +4,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.login {
+.registrar {
     background: #FFFFFF;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ body {
     box-sizing: border-box;
 }
 
-.login .gas-finder {
+.registrar .gas-finder {
     overflow-wrap: break-word;
     font-family: 'Secular One', sans-serif;
     font-weight: 400;
@@ -24,7 +24,7 @@ body {
     width: 100%;
 }
 
-.login .container-1 {
+.registrar .container-1 {
     background: #333333;
     position: relative;
     margin-bottom: 25px;
@@ -35,8 +35,9 @@ body {
     justify-content: center;
 }
 
-.login .retornar-ahome {
-    margin: 0 19px 7px 19px;
+.registrar .retornar-ahome,
+.registrar .retornar-ao-login {
+    margin: 0 19px;
     display: inline-block;
     align-self: flex-start;
     overflow-wrap: break-word;
@@ -46,7 +47,7 @@ body {
     color: #333333;
 }
 
-.login .entrar-em-gas-finder {
+.registrar .registrar-se-em-gas-finder {
     margin: 0 0 132px 0;
     display: inline-block;
     overflow-wrap: break-word;
@@ -91,42 +92,10 @@ body {
     color: #000000;
 }
 
-.login .gdo-google-1 {
-    background: url('../assets/images/GDoGoogle.png') 50% / cover no-repeat;
-    width: 17px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.login .esqueceu-sua-senha {
-    margin: 0 309.6px 127px 0;
-    display: inline-block;
-    overflow-wrap: break-word;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #0000FF;
-}
-
-.login .container {
-    background: #CCCCCC;
-    position: relative;
-    margin: 0 0 26px 0; /* Centralizando o botão "Google" */
-    display: flex;
-    flex-direction: row;
-    padding: 15px 18.4px 14px 14px;
-    width: fit-content;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center; /* Centralizando o botão "Google" */
-}
-
-.login .container-2 {
+.registrar .container {
     background: #FFC107;
     position: relative;
-    margin: 0 auto 26px auto; /* Centralizando o botão "Entrar" */
+    margin: 0 auto 26px auto;
     display: flex;
     padding: 15px 1.7px 15px 0;
     width: 100px;
@@ -137,42 +106,21 @@ body {
     cursor: pointer;
 }
 
-.login .entrar {
-    overflow-wrap: break-word;
+.registrar .container span {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     color: #000000;
-}
-
-.login .google {
-    margin-left: 8px;
-    overflow-wrap: break-word;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.login .ainda-no-tem-conta {
-    margin-top: 10px;
     text-align: center;
-    font-family: 'Secular One', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #000000;
 }
 
-.login form {
+.registrar form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.login button {
+.registrar button {
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
@@ -180,7 +128,7 @@ body {
     color: #000000;
 }
 
-.login a {
+.registrar a {
     text-decoration: none;
     color: inherit;
     display: inline-block;
