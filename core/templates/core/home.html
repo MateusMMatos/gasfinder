@@ -22,37 +22,17 @@
                             map: map,
                             title: posto.nome
                         });
+                    });
+                });
 
+            fetch('/api/descontos/')
+                .then(response => response.json())
+                .then(data => {
+                    const descontosList = document.getElementById('descontos-list');
+                    data.forEach(desconto => {
                         const listItem = document.createElement('li');
-
-                        const postoInfo = document.createElement('div');
-                        postoInfo.classList.add('posto-info');
-
-                        const nome = document.createElement('div');
-                        nome.classList.add('nome');
-                        nome.textContent = posto.nome;
-
-                        const endereco = document.createElement('div');
-                        endereco.classList.add('endereco');
-                        endereco.textContent = `${posto.localizacao__latitude}, ${posto.localizacao__longitude}`;
-
-                        postoInfo.appendChild(nome);
-                        postoInfo.appendChild(endereco);
-
-                        const postoDesconto = document.createElement('div');
-                        postoDesconto.classList.add('posto-desconto');
-                        postoDesconto.textContent = "5%";
-
-                        const setaIcon = document.createElement('span');
-                        setaIcon.classList.add('seta');
-                        setaIcon.innerHTML = '↔'; // substitua por um ícone real, se necessário
-
-                        postoDesconto.appendChild(setaIcon);
-
-                        listItem.appendChild(postoInfo);
-                        listItem.appendChild(postoDesconto);
-
-                        document.getElementById('postos-list').appendChild(listItem);
+                        listItem.textContent = `${desconto.posto__nome} - ${desconto.percentual}%`;
+                        descontosList.appendChild(listItem);
                     });
                 });
         }
@@ -64,6 +44,7 @@
             <ul style="flex-grow: 1;">
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'descontos' %}">Descontos</a></li>
+                <li><a href="{% url 'emergency' %}">Emergência</a></li>
             </ul>
         </nav>
         <h1>Gas Finder</h1>
@@ -83,7 +64,20 @@
         <div id="sidebar-container">
             <h2>Postos de Combustível</h2>
             <div id="sidebar">
-                <ul id="postos-list"></ul>
+                <ul id="postos-list">
+                    {% for posto in postos %}
+                        <li>
+                            <div class="posto-info">
+                                <div class="nome">{{ posto.nome }}</div>
+                                <div class="endereco">{{ posto.localizacao.latitude }}, {{ posto.localizacao.longitude }}</div>
+                            </div>
+                            <div class="posto-desconto">
+                                <span class="desconto">{{ posto.desconto }}</span>
+                                <span class="seta">→</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

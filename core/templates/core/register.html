@@ -1,18 +1,33 @@
+<!-- register.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
-        <h1>Registrar</h1>
+        <h1>Gas Finder</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'descontos' %}">Descontos</a></li>
+            </ul>
+            <ul>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
     </header>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar</button>
-    </form>
+    <div class="auth-container">
+        <h2>Registrar-se em GasFinder</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Registrar-me</button>
+        </form>
+    </div>
 </body>
 </html>
