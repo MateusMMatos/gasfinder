@@ -1,38 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>GasFinder Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Gas Finder</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'descontos' %}">Descontos</a></li>
-                <li><a href="{% url 'emergency' %}">Emergência</a></li>
-            </ul>
-            <ul>
-                <li><a href="{% url 'login' %}">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="auth-container">
-        <h2>Entrar em GasFinder</h2>
+    <div class="login">
+        <div class="container-1">
+            <span class="gas-finder">GasFinder</span>
+        </div>
+        <div class="retornar-ahome"><a href="{% url 'home' %}">Retornar a Home</a></div>
+        <div class="entrar-em-gas-finder">Entrar em GasFinder</div>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Entrar</button>
+            <div class="input-group">
+                <input type="text" name="username" id="username" required placeholder=" ">
+                <label for="username">*Email</label>
+                <div class="line-1"></div>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" id="password" required placeholder=" ">
+                <label for="password">*Senha</label>
+                <div class="line-2"></div>
+            </div>
+            <div class="esqueceu-sua-senha"><a href="#">Esqueceu sua senha?</a></div>
+            <button type="submit" class="container-2"><span class="entrar">Entrar</span></button>
         </form>
-        <div class="google-login">
-            <button>Google</button>
+        <div class="container">
+            <div class="gdo-google-1"></div>
+            <div class="google"><a href="#">Google</a></div>
         </div>
         <div class="register-link">
-            <a href="{% url 'registrar' %}">Ainda não tem conta? ➡️</a>
+            <a href="{% url 'registrar' %}">Ainda não tem conta? ➔</a>
         </div>
     </div>
 </body>

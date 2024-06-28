@@ -1,115 +1,188 @@
-/* login.css */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    font-family: 'Inter', sans-serif;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 1rem 0;
+.login .ainda-no-tem-conta {
+    margin-top: 10px;
     text-align: center;
+    font-family: 'Secular One', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+}
+
+.login .entrar {
+    overflow-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+}
+
+.login .google {
+    margin-left: 8px;
+    overflow-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    justify-content: center;
 }
 
-header h1 {
-    margin: 0;
-    flex-grow: 1;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-}
-
-nav li {
-    margin: 0 1rem;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    background-color: #555;
-    border-radius: 0.25rem;
-}
-
-nav a:hover {
-    background-color: #777;
-}
-
-.auth-container {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 0.25rem;
-    text-align: center;
-}
-
-.auth-container h2 {
-    margin-bottom: 1rem;
-}
-
-form {
+.login {
+    background: #FFFFFF;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-form input, form button {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
+    align-items: center;
+    padding-bottom: 152px;
     width: 100%;
     box-sizing: border-box;
 }
 
-form button {
-    background-color: #ffca18;
-    color: white;
+.login .retornar-ahome {
+    margin: 0 19px 128px 19px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #333333;
+}
+
+.login .gas-finder {
+    overflow-wrap: break-word;
+    font-family: 'Secular One', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #FFFFFF;
+    text-align: center;
+    width: 100%;
+}
+
+.login .entrar-em-gas-finder {
+    margin: 0 0 131px 36.1px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Secular One', sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    color: #000000;
+}
+
+.input-group {
+    position: relative;
+    margin: 0 0 20px 36px;
+}
+
+.input-group input {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 10px 5px;
+    width: 500px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    font-size: 12px;
+    color: #000000;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    top: -20px;
+    font-size: 12px;
+    color: #000000;
+}
+
+.login .gdo-google-1 {
+    background: url('../assets/images/GDoGoogle.png') 50% / cover no-repeat;
+    width: 17px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login .esqueceu-sua-senha {
+    margin: 0 309.6px 127px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #0000FF;
+}
+
+.login .container {
+    background: #CCCCCC;
+    position: relative;
+    margin: 0 0 26px 0; /* Centralizando o botão "Google" */
+    display: flex;
+    flex-direction: row;
+    padding: 15px 18.4px 14px 14px;
+    width: fit-content;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center; /* Centralizando o botão "Google" */
+}
+
+.login .container-1 {
+    background: #333333;
+    position: relative;
+    margin-bottom: 25px;
+    display: flex;
+    padding: 13px 0 12px 34.7px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.login .container-2 {
+    background: #FFC107;
+    position: relative;
+    margin: 0 auto 26px auto; /* Centralizando o botão "Entrar" */
+    display: flex;
+    padding: 15px 1.7px 15px 0;
+    width: 100px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
     border: none;
     cursor: pointer;
 }
 
-form button:hover {
-    background-color: #e0a800;
+.login form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.google-login button {
-    background-color: white;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    padding: 0.75rem;
+.login button {
     cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
 }
 
-.google-login button:hover {
-    background-color: #f0f0f0;
-}
-
-.register-link {
-    margin-top: 1rem;
-}
-
-.register-link a {
-    color: #333;
+.login a {
     text-decoration: none;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
+    color: inherit;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }
