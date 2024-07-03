@@ -4,6 +4,7 @@
     <title>Descontos</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 </head>
 <body>
@@ -15,7 +16,7 @@
                 <li><a href="{% url 'emergency' %}">Emergência</a></li>
             </ul>
         </nav>
-        <h1>Gas Finder</h1>
+        <h1>GasFinder</h1>
         <nav>
             <ul>
                 {% if user.is_authenticated %}

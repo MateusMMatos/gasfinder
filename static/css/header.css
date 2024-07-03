@@ -6,6 +6,13 @@ header {
     align-items: center;
     padding: 13px 2rem;
     font-family: 'Secular One', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed; /* Fixar no topo */
+    top: 0;
+    left: 0;
+    margin: 0; /* Remover qualquer margem */
+    z-index: 1000; /* Certificar-se de que está acima de outros elementos */
 }
 
 header h1 {
@@ -13,9 +20,8 @@ header h1 {
     text-align: center;
     font-family: 'Secular One', sans-serif;
     font-weight: 400;
-    font-size: 24px; /* Fonte usada na página de login */
+    font-size: 24px;
     color: #FFFFFF;
-    flex: 1;
 }
 
 nav ul {

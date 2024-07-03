@@ -1,85 +1,260 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-    <script>
-        function initMap() {
-            const map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -25.363, lng: 131.044},
-                zoom: 10
-            });
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj2yAxrkm4mpP-LS1QZuiRTmh4IpEjU6E" async defer></script>
+    <style>
+        /* home.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-            fetch('/api/postos/')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(posto => {
-                        new google.maps.Marker({
-                            position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
-                            map: map,
-                            title: posto.nome
-                        });
-                    });
-                });
+.login {
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 60px !important; /* Ajuste para compensar o header fixo */
+}
 
-            fetch('/api/descontos/')
-                .then(response => response.json())
-                .then(data => {
-                    const descontosList = document.getElementById('descontos-list');
-                    data.forEach(desconto => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${desconto.posto__nome} - ${desconto.percentual}%`;
-                        descontosList.appendChild(listItem);
-                    });
-                });
-        }
-    </script>
+.content {
+    display: flex;
+    width: 100%;
+    padding: 0 4rem !important; /* Remover padding vertical, adicionar padding horizontal */
+    box-sizing: border-box;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.map-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 4rem !important; /* Espaçamento entre o mapa e a sidebar */
+}
+
+.map-title {
+    text-align: center;
+    font-family: 'Secular One', sans-serif;
+    font-size: 1.5rem;
+    color: #000000;
+    margin: 1rem 0 !important; /* Ajuste de margens */
+}
+
+.map {
+    background: #D9D9D9 !important;
+    border: 0.2rem solid #FFCA18 !important;
+    border-radius: 0.6rem !important;
+    width: 100% !important;
+    height: 40rem !important; /* Altura fixa para garantir alinhamento */
+}
+
+.sidebar {
+    width: 20rem !important; /* Ajustar conforme necessário */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1rem !important; /* Espaçamento entre a sidebar e o mapa */
+}
+
+.sidebar-title {
+    font-family: 'Secular One', sans-serif;
+    font-size: 1.5rem;
+    color: #000000;
+    margin: 1rem 0 !important; /* Ajuste de margens */
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+}
+
+.filter-title {
+    font-family: 'Secular One', sans-serif;
+    font-size: 1.2rem;
+    color: #000000;
+    margin-right: 0.5rem !important;
+}
+
+.filter-options {
+    display: flex !important;
+}
+
+.filter-option {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    background: #FFFFFF !important;
+    border: 0.1rem solid #000000 !important;
+    margin-left: 0.5rem !important;
+    border-radius: 0.3rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.station-list-container {
+    background: #E5E5E5 !important;
+    border: 0.1rem solid #000 !important; /* Borda preta */
+    border-radius: 0.6rem !important;
+    padding: 1rem !important;
+    width: 100% !important;
+    max-height: 35rem !important; /* Ajustar altura conforme necessário */
+    overflow-y: scroll !important; /* Adicionar barra de rolagem */
+    scrollbar-width: none !important; /* Para Firefox */
+}
+
+.station-list-container::-webkit-scrollbar {
+    display: none !important; /* Para Chrome, Safari e Opera */
+}
+
+.station-list {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.station {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 0.5rem 0.5rem !important; /* Ajustar padding */
+    background: #FFFFFF !important;
+    border-radius: 0.3rem !important;
+    border: 0.1rem solid #000000 !important;
+    margin-bottom: 0.5rem !important; /* Ajuste para espaçamento entre os itens */
+}
+
+.station-details {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.station-image {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 0.3rem !important;
+    margin-right: 0.5rem !important;
+}
+
+.station-info {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.station-name {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1rem !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+.station-rating {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: #FFA500 !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
+}
+
+.station-price-distance {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+.station-price, .station-distance {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: #000000 !important;
+}
+
+    </style>
 </head>
 <body>
     <header>
         <nav class="left">
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'descontos' %}">Descontos</a></li>
-                <li><a href="{% url 'emergency' %}">Emergência</a></li>
+                <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
+                <li><a class="menu-item" href="{% url 'descontos' %}">Descontos</a></li>
+                <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
             </ul>
         </nav>
-        <h1>GasFinder</h1>
+        <h1 class="logo">GasFinder</h1>
         <nav class="right">
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a class="login-button" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'registrar' %}">Registrar</a></li>
+                    <li><a class="login-button" href="{% url 'login' %}">Login</a></li>
+                    <li><a class="login-button" href="{% url 'registrar' %}">Registrar</a></li>
                 {% endif %}
             </ul>
         </nav>
     </header>
-    <div style="display: flex; justify-content: center; align-items: flex-start; margin-top: 40px;">
-        <div id="map"></div>
-        <div id="sidebar-container">
-            <h2>Postos de Combustível</h2>
-            <div id="sidebar">
-                <ul id="postos-list">
-                    {% for posto in postos %}
-                        <li>
-                            <div class="posto-info">
-                                <div class="nome">{{ posto.nome }}</div>
-                                <div class="endereco">{{ posto.localizacao.latitude }}, {{ posto.localizacao.longitude }}</div>
+    <div class="login">
+        <div class="content">
+            <div class="map-section">
+                <div class="map-title">Mapa de Postos</div>
+                <div id="map" class="map"></div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-title">Selecione o Posto</div>
+                <div class="filter-section">
+                    <span class="filter-title">Filtrar:</span>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <img src="{% static 'assets/images/DinheiroIconeA.png' %}" alt="Filtro Preço" class="filter-icon">
+                        </div>
+                        <div class="filter-option">
+                            <img src="{% static 'assets/images/RotaGps.png' %}" alt="Filtro Distância" class="filter-icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="station-list-container">
+                    <div class="station-list" id="postos-list">
+                        {% for posto in postos %}
+                            <div class="station">
+                                <div class="station-details">
+                                    <img src="{% static 'assets/images/PostoIcone.png' %}" class="station-image" alt="Posto">
+                                    <div class="station-info">
+                                        <span class="station-name">{{ posto.nome }}</span>
+                                        <div class="station-rating">
+                                            <span>★ ★ ★ ☆ ☆</span>
+                                        </div>
+                                        <div class="station-price-distance">
+                                            <span class="station-price">{{ posto.desconto }}</span>
+                                            <span class="station-distance">{{ posto.localizacao.latitude }}, {{ posto.localizacao.longitude }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="posto-desconto">
-                                <span class="desconto">{{ posto.desconto }}</span>
-                                <span class="seta">→</span>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
