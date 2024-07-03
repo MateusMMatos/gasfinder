@@ -114,6 +114,24 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
+def locator_view(request):
+    return render(request, 'core/locator.html')
+
+def neighborhood_discovery_view(request):
+    return render(request, 'core/neighborhoodDiscovery.html')
+
+def mapa_simples_view(request):
+    return render(request, 'core/mapaSimples.html')
+
+def travel_times_view(request):
+    return render(request, 'core/travelTimes.html')
+
+def address_selection_view(request):
+    return render(request, 'core/addressSelection.html')
+
+def profile_user_view(request):
+    return render(request, 'core/profileUser.html')
+
 @csrf_exempt
 def capture_image(request):
     if request.method == 'POST':

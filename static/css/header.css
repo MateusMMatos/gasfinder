@@ -34,6 +34,7 @@ nav ul {
 
 nav li {
     margin: 0 1rem;
+    position: relative; /* Para o dropdown */
 }
 
 nav a {
@@ -60,4 +61,54 @@ nav.right {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+}
+
+.login-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;  /* Reduzir o tamanho do box */
+    height: 20px; /* Reduzir o tamanho do box */
+    background-color: #555;
+    border-radius: 0.25rem;
+    cursor: pointer; /* Alterar cursor para indicar clicável */
+}
+
+.login-icon img {
+    width: 40px; /* Ajuste o tamanho aqui */
+    height: 40px; /* Ajuste o tamanho aqui */
+    border-radius: 50%; /* Deixar o ícone circular */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333333;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0; /* Alinhar à direita do pai */
+    top: calc(100% + 5px); /* Alinhar abaixo do pai */
+    border-radius: 0.25rem;
+    width: 160px; /* Fixar a largura */
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #575757; /* Adicionar borda inferior */
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none; /* Remover borda do último item */
+}
+
+.dropdown-content a:hover {
+    background-color: #3e3e3e;
+}
+
+.show {
+    display: block;
 }

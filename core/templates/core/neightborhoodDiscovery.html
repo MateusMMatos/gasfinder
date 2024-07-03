@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Neighborhood Discovery</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    .neighborhood-discovery { height: 100%; width: 100%; position: relative; }
+    .map { height: 100%; width: 100%; }
+  </style>
+  <script>
+    'use strict';
+    function initMap() {
+      const map = new google.maps.Map(document.querySelector('.map'), {
+        center: { lat: 48.8773, lng: 2.33 },
+        zoom: 16,
+        fullscreenControl: true,
+        mapTypeControl: true,
+        streetViewControl: false,
+        zoomControl: true,
+      });
+      // Further customization and adding points of interest can be done here.
+    }
+  </script>
+</head>
+<body>
+  <div class="neighborhood-discovery">
+    <div class="map"></div>
+  </div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj2yAxrkm4mpP-LS1QZuiRTmh4IpEjU6E&callback=initMap" async defer></script>
+</body>
+</html>

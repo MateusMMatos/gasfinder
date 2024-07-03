@@ -9,197 +9,320 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj2yAxrkm4mpP-LS1QZuiRTmh4IpEjU6E" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj2yAxrkm4mpP-LS1QZuiRTmh4IpEjU6E&callback=initMap" async defer></script>
     <style>
         /* home.css */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-}
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-.login {
-    background: #FFFFFF;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
-    padding-top: 60px !important; /* Ajuste para compensar o header fixo */
-}
+        .login {
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 60px !important; /* Ajuste para compensar o header fixo */
+        }
 
-.content {
-    display: flex;
-    width: 100%;
-    padding: 0 4rem !important; /* Remover padding vertical, adicionar padding horizontal */
-    box-sizing: border-box;
-    justify-content: space-between;
-    flex-grow: 1;
-}
+        .content {
+            display: flex;
+            width: 100%;
+            padding: 0 4rem !important; /* Remover padding vertical, adicionar padding horizontal */
+            box-sizing: border-box;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
 
-.map-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-right: 4rem !important; /* Espaçamento entre o mapa e a sidebar */
-}
+        .map-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 4rem !important; /* Espaçamento entre o mapa e a sidebar */
+        }
 
-.map-title {
-    text-align: center;
-    font-family: 'Secular One', sans-serif;
-    font-size: 1.5rem;
-    color: #000000;
-    margin: 1rem 0 !important; /* Ajuste de margens */
-}
+        .map-title {
+            text-align: center;
+            font-family: 'Secular One', sans-serif;
+            font-size: 1.5rem;
+            color: #000000;
+            margin: 1rem 0 !important; /* Ajuste de margens */
+        }
 
-.map {
-    background: #D9D9D9 !important;
-    border: 0.2rem solid #FFCA18 !important;
-    border-radius: 0.6rem !important;
-    width: 100% !important;
-    height: 40rem !important; /* Altura fixa para garantir alinhamento */
-}
+        .map {
+            background: #D9D9D9 !important;
+            border: 0.2rem solid #FFCA18 !important;
+            border-radius: 0.6rem !important;
+            width: 100% !important;
+            height: 40rem !important; /* Altura fixa para garantir alinhamento */
+        }
 
-.sidebar {
-    width: 20rem !important; /* Ajustar conforme necessário */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 1rem !important; /* Espaçamento entre a sidebar e o mapa */
-}
+        .sidebar {
+            width: 20rem !important; /* Ajustar conforme necessário */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 1rem !important; /* Espaçamento entre a sidebar e o mapa */
+        }
 
-.sidebar-title {
-    font-family: 'Secular One', sans-serif;
-    font-size: 1.5rem;
-    color: #000000;
-    margin: 1rem 0 !important; /* Ajuste de margens */
-}
+        .sidebar-title {
+            font-family: 'Secular One', sans-serif;
+            font-size: 1.5rem;
+            color: #000000;
+            margin: 1rem 0 !important; /* Ajuste de margens */
+        }
 
-.filter-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem !important;
-    width: 100% !important;
-    justify-content: flex-start !important;
-}
+        .filter-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem !important;
+            width: 100% !important;
+            justify-content: flex-start !important;
+        }
 
-.filter-title {
-    font-family: 'Secular One', sans-serif;
-    font-size: 1.2rem;
-    color: #000000;
-    margin-right: 0.5rem !important;
-}
+        .filter-title {
+            font-family: 'Secular One', sans-serif;
+            font-size: 1.2rem;
+            color: #000000;
+            margin-right: 0.5rem !important;
+        }
 
-.filter-options {
-    display: flex !important;
-}
+        .filter-options {
+            display: flex !important;
+        }
 
-.filter-option {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-    background: #FFFFFF !important;
-    border: 0.1rem solid #000000 !important;
-    margin-left: 0.5rem !important;
-    border-radius: 0.3rem !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .filter-option {
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+            background: #FFFFFF !important;
+            border: 0.1rem solid #000000 !important;
+            margin-left: 0.5rem !important;
+            border-radius: 0.3rem !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.filter-icon {
-    width: 1.5rem !important;
-    height: 1.5rem !important;
-}
+        .filter-icon {
+            width: 1.5rem !important;
+            height: 1.5rem !important;
+        }
 
-.station-list-container {
-    background: #E5E5E5 !important;
-    border: 0.1rem solid #000 !important; /* Borda preta */
-    border-radius: 0.6rem !important;
-    padding: 1rem !important;
-    width: 100% !important;
-    max-height: 35rem !important; /* Ajustar altura conforme necessário */
-    overflow-y: scroll !important; /* Adicionar barra de rolagem */
-    scrollbar-width: none !important; /* Para Firefox */
-}
+        .station-list-container {
+            background: #E5E5E5 !important;
+            border: 0.1rem solid #000 !important; /* Borda preta */
+            border-radius: 0.6rem !important;
+            padding: 1rem !important;
+            width: 100% !important;
+            max-height: 35rem !important; /* Ajustar altura conforme necessário */
+            overflow-y: scroll !important; /* Adicionar barra de rolagem */
+            scrollbar-width: none !important; /* Para Firefox */
+        }
 
-.station-list-container::-webkit-scrollbar {
-    display: none !important; /* Para Chrome, Safari e Opera */
-}
+        .station-list-container::-webkit-scrollbar {
+            display: none !important; /* Para Chrome, Safari e Opera */
+        }
 
-.station-list {
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-}
+        .station-list {
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }
 
-.station {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-    padding: 0.5rem 0.5rem !important; /* Ajustar padding */
-    background: #FFFFFF !important;
-    border-radius: 0.3rem !important;
-    border: 0.1rem solid #000000 !important;
-    margin-bottom: 0.5rem !important; /* Ajuste para espaçamento entre os itens */
-}
+        .station {
+            display: flex !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 0.5rem 0.5rem !important; /* Ajustar padding */
+            background: #FFFFFF !important;
+            border-radius: 0.3rem !important;
+            border: 0.1rem solid #000000 !important;
+            margin-bottom: 0.5rem !important; /* Ajuste para espaçamento entre os itens */
+        }
 
-.station-details {
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
-}
+        .station-details {
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
 
-.station-image {
-    width: 2rem !important;
-    height: 2rem !important;
-    border-radius: 0.3rem !important;
-    margin-right: 0.5rem !important;
-}
+        .station-image {
+            width: 2rem !important;
+            height: 2rem !important;
+            border-radius: 0.3rem !important;
+            margin-right: 0.5rem !important;
+        }
 
-.station-info {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-}
+        .station-info {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+        }
 
-.station-name {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important;
-    color: #000000 !important;
-    font-weight: bold !important;
-}
+        .station-name {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 1rem !important;
+            color: #000000 !important;
+            font-weight: bold !important;
+        }
 
-.station-rating {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.9rem !important;
-    color: #FFA500 !important;
-    margin-top: 0.2rem !important;
-    margin-bottom: 0.2rem !important;
-}
+        .station-rating {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.9rem !important;
+            color: #FFA500 !important;
+            margin-top: 0.2rem !important;
+            margin-bottom: 0.2rem !important;
+        }
 
-.station-price-distance {
-    display: flex !important;
-    justify-content: space-between !important;
-}
+        .station-price-distance {
+            display: flex !important;
+            justify-content: space-between !important;
+        }
 
-.station-price, .station-distance {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.9rem !important;
-    color: #000000 !important;
-}
-
+        .station-price, .station-distance {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.9rem !important;
+            color: #000000 !important;
+        }
     </style>
+    <script>
+        let map, userMarker, directionsService, directionsRenderer;
+
+        function initMap() {
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+            });
+            directionsRenderer.setMap(map);
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(pos);
+                    userMarker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: "Sua Posição",
+                        icon: {
+                            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                        }
+                    });
+
+                    // Adiciona os postos no mapa
+                    fetchPostos();
+
+                }, () => {
+                    handleLocationError(true, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, pos) {
+            const infoWindow = new google.maps.InfoWindow({
+                position: pos,
+                content: browserHasGeolocation ?
+                    'Erro: O serviço de geolocalização falhou.' :
+                    'Erro: Seu navegador não suporta geolocalização.'
+            });
+            infoWindow.open(map);
+        }
+
+        function fetchPostos() {
+            fetch('/api/postos/')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(posto => {
+                        const marker = new google.maps.Marker({
+                            position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
+                            map: map,
+                            title: posto.nome
+                        });
+
+                        marker.addListener('click', () => {
+                            calculateAndDisplayRoute(marker.position);
+                        });
+
+                        const stationItem = document.createElement('div');
+                        stationItem.className = 'station';
+                        stationItem.innerHTML = `
+                            <div class="station-details">
+                                <img src="{% static 'assets/images/PostoIcone.png' %}" class="station-image" alt="Posto">
+                                <div class="station-info">
+                                    <span class="station-name">${posto.nome}</span>
+                                    <div class="station-rating"><span>★ ★ ★ ☆ ☆</span></div>
+                                    <div class="station-price-distance">
+                                        <span class="station-price">${posto.desconto}</span>
+                                        <span class="station-distance">${posto.localizacao__latitude}, ${posto.localizacao__longitude}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        stationItem.addEventListener('click', () => {
+                            map.setCenter(marker.position);
+                            calculateAndDisplayRoute(marker.position);
+                        });
+                        document.getElementById('postos-list').appendChild(stationItem);
+                    });
+                });
+        }
+
+        function calculateAndDisplayRoute(destination) {
+            if (!userMarker) return;
+
+            directionsService.route(
+                {
+                    origin: userMarker.getPosition(),
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING
+                },
+                (response, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                }
+            );
+        }
+
+            // Adicionar script para lidar com clique no ícone de login
+            document.addEventListener('DOMContentLoaded', function() {
+        const loginIcon = document.querySelector('.login-icon');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        loginIcon.addEventListener('click', function(event) {
+            event.stopPropagation(); // Impede que o clique se propague para outros elementos
+            dropdownContent.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!loginIcon.contains(event.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+    });
+    </script>
 </head>
 <body>
     <header>
         <nav class="left">
             <ul>
                 <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
-                <li><a class="menu-item" href="{% url 'descontos' %}">Descontos</a></li>
                 <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
             </ul>
         </nav>
@@ -207,10 +330,17 @@ body, html {
         <nav class="right">
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a class="login-button" href="{% url 'logout' %}">Logout</a></li>
+                    <li class="dropdown">
+                        <a class="login-icon" href="javascript:void(0);">
+                            <img src="{% static 'assets/images/loginIcone.png' %}" alt="Login Icon">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile_user' %}">Exibir perfil</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
                 {% else %}
                     <li><a class="login-button" href="{% url 'login' %}">Login</a></li>
-                    <li><a class="login-button" href="{% url 'registrar' %}">Registrar</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -236,23 +366,7 @@ body, html {
                 </div>
                 <div class="station-list-container">
                     <div class="station-list" id="postos-list">
-                        {% for posto in postos %}
-                            <div class="station">
-                                <div class="station-details">
-                                    <img src="{% static 'assets/images/PostoIcone.png' %}" class="station-image" alt="Posto">
-                                    <div class="station-info">
-                                        <span class="station-name">{{ posto.nome }}</span>
-                                        <div class="station-rating">
-                                            <span>★ ★ ★ ☆ ☆</span>
-                                        </div>
-                                        <div class="station-price-distance">
-                                            <span class="station-price">{{ posto.desconto }}</span>
-                                            <span class="station-distance">{{ posto.localizacao.latitude }}, {{ posto.localizacao.longitude }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+                        <!-- Lista de postos será carregada aqui -->
                     </div>
                 </div>
             </div>
