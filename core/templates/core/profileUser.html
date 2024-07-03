@@ -4,38 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/profileUser.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
+    <script>
+        // Adicionar script para lidar com clique no ícone de login
+        document.addEventListener('DOMContentLoaded', function() {
+    const loginIcon = document.querySelector('.login-icon');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    loginIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique se propague para outros elementos
+        dropdownContent.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!loginIcon.contains(event.target)) {
+            dropdownContent.classList.remove('show');
+        }
+    }); 
+    });
+</script>
 </head>
 <body>
+    <header>
+        <nav class="left">
+            <ul>
+                <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
+                <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
+            </ul>
+        </nav>
+        <h1 class="logo">GasFinder</h1>
+        <nav class="right">
+            <ul>
+                {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a class="login-icon" href="javascript:void(0);">
+                            <img src="{% static 'assets/images/loginIcone.png' %}" alt="Login Icon">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile_user' %}">Exibir perfil</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a class="login-button" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
     <div class="frame-2">
         <div class="registrar">
             <div class="login-icone-1"></div>
-            <div class="nome">Nome</div>
+            <div class="nome">{{ request.user.username }}</div>
             <div class="historico-de-abastecimento">Histórico de Abastecimento</div>
             <div class="container-1">
+                {% for item in historico %}
                 <div class="container-3">
                     <div class="container-5">
                         <div class="posto-icone-1"></div>
-                        <div class="ipiranga">Ipiranga</div>
-                        <div class="r-275">R$ 2,75</div>
+                        <div class="posto-nome">{{ item.posto.nome }}</div>
+                        <div class="preco">R$ {{ item.preco_combustivel }}</div>
                     </div>
                     <div class="container-6">
-                        <div class="data">Data</div>
-                        <span class="horario">Horário</span>
+                        <div class="data">{{ item.data_hora|date:"d/m/Y" }}</div>
+                        <span class="horario">{{ item.data_hora|date:"H:i:s" }}</span>
                     </div>
                 </div>
-                <div class="container-2">
-                    <div class="container-4">
-                        <div class="posto-icone-2"></div>
-                        <div class="shell">Shell</div>
-                        <div class="r-478">R$ 4,78</div>
-                    </div>
-                    <div class="container">
-                        <div class="data-1">Data</div>
-                        <span class="horario-1">Horário</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

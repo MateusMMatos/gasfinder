@@ -10,16 +10,19 @@ from .serializers import (
     AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
 )
 from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
-from .models import PostoCombustivel, Desconto, FotoVerificacao
+from .models import PostoCombustivel, Desconto, FotoVerificacao, HistoricoAbastecimento
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 import base64
 from django.core.files.base import ContentFile
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -64,6 +67,16 @@ class BorrachariaViewSet(viewsets.ModelViewSet):
 class OficinaMecanicaViewSet(viewsets.ModelViewSet):
     queryset = OficinaMecanica.objects.all()
     serializer_class = OficinaMecanicaSerializer
+
+class PostosListView(View):
+    def get(self, request, *args, **kwargs):
+        postos = PostoCombustivel.objects.all().values('nome', 'localizacao__latitude', 'localizacao__longitude')
+        return JsonResponse(list(postos), safe=False)
+
+class DescontosListView(View):
+    def get(self, request, *args, **kwargs):
+        descontos = Desconto.objects.all().values('posto__nome', 'percentual', 'descricao')
+        return JsonResponse(list(descontos), safe=False)
 
 def custom_404(request, exception):
     return render(request, 'core/404.html', status=404)
@@ -143,13 +156,40 @@ def capture_image(request):
         return redirect('home')
     return render(request, 'capture_image.html')
 
+@login_required
+def profile_user_view(request):
+    historico = HistoricoAbastecimento.objects.filter(usuario=request.user).order_by('-data_hora')
+    context = {
+        'historico': historico,
+    }
+    return render(request, 'core/profileUser.html', context)
 
-class PostosListView(View):
-    def get(self, request, *args, **kwargs):
-        postos = PostoCombustivel.objects.all().values('nome', 'localizacao__latitude', 'localizacao__longitude')
-        return JsonResponse(list(postos), safe=False)
+def posto_profile_view(request, posto_id):
+    posto = get_object_or_404(PostoCombustivel, pk=posto_id)
+    elogios = Comentario.objects.filter(posto=posto, tipo='elogio')
+    sugestoes = Comentario.objects.filter(posto=posto, tipo='sugestao')
+    reclamacoes = Comentario.objects.filter(posto=posto, tipo='reclamacao')
+    context = {
+        'posto': posto,
+        'elogios': elogios,
+        'sugestoes': sugestoes,
+        'reclamacoes': reclamacoes,
+    }
+    return render(request, 'core/posto_profile.html', context)
 
-class DescontosListView(View):
-    def get(self, request, *args, **kwargs):
-        descontos = Desconto.objects.all().values('posto__nome', 'percentual', 'descricao')
-        return JsonResponse(list(descontos), safe=False)
+@login_required
+def submit_comment(request, posto_id):
+    if request.method == 'POST':
+        posto = get_object_or_404(PostoCombustivel, pk=posto_id)
+        tipo = request.POST.get('comentario_tipo')
+        texto = request.POST.get('comentario')
+        avaliacao = request.POST.get('avaliacao')
+        Comentario.objects.create(
+            usuario=request.user,
+            posto=posto,
+            tipo=tipo,
+            texto=texto,
+            avaliacao=avaliacao
+        )
+        return redirect('posto_profile', posto_id=posto_id)
+

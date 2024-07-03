@@ -1,0 +1,298 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.frame-2 {
+    background: #FFFFFF;
+    padding: 0 2.1rem 2.1rem 1.8rem;
+    width: 93.8rem;
+    box-sizing: border-box;
+}
+
+.frame-2 .nome-do-posto {
+    margin: 0 5.2rem 11.6rem 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 3rem;
+    color: #000000;
+}
+
+.frame-2 .posto-icone-3 {
+    background: url('../assets/images/posto_icone_2.png') 50% / cover no-repeat;
+    width: 7.1rem;
+    height: 7.8rem;
+}
+
+.frame-2 .estrelas-2 {
+    background: url('../assets/images/estrelas_2.png') 50% / cover no-repeat;
+    position: absolute;
+    top: 19.8rem;
+    right: 33.6rem;
+    width: 21.4rem;
+    height: 8.2rem;
+}
+
+.frame-2 .comentarios {
+    margin: 0.6rem 2.2rem 0 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 3rem;
+    color: #FFFFFF;
+}
+
+.frame-2 .correto-icone-1 {
+    background: url('../assets/images/correto_icone_1.png') 50% / cover no-repeat;
+    margin: 0.4rem 0 0.5rem 0;
+    width: 4.3rem;
+    height: 4.1rem;
+}
+
+.frame-2 .lampada-icone-1 {
+    background: url('../assets/images/lampada_icone.png') 50% / cover no-repeat;
+    margin: 0.3rem 0.8rem 0.3rem 0;
+    width: 5.1rem;
+    height: 4.4rem;
+}
+
+.frame-2 .xicone-1 {
+    background: url('../assets/images/xicone_1.png') 50% / cover no-repeat;
+    margin-bottom: 0.1rem;
+    width: 4.5rem;
+    height: 4.9rem;
+}
+
+.frame-2 .login-icone-1 {
+    background: url('../assets/images/login_icone_1.png') 50% / cover no-repeat;
+    margin: 0 0.8rem 2.3rem 0;
+    width: 4.6rem;
+    height: 5.3rem;
+}
+
+.frame-2 .nome-usuario {
+    margin-bottom: 0.9rem;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.frame-2 .comentario {
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 2rem;
+    color: #000000;
+}
+
+.frame-2 .comentario-1 {
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 2rem;
+    color: #000000;
+}
+
+.frame-2 .login-icone-2 {
+    background: url('../assets/images/login_icone_1.png') 50% / cover no-repeat;
+    margin: 0 0.8rem 2.3rem 0;
+    width: 4.6rem;
+    height: 5.3rem;
+}
+
+.frame-2 .nome-usuario-1 {
+    margin-bottom: 0.9rem;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.frame-2 .container {
+    border-radius: 0.6rem;
+    background: #D9D9D9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 3.3rem 0 2.6rem;
+    width: fit-content;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-1 {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.frame-2 .registrar {
+    border-radius: 0.3rem;
+    background: #555555;
+    position: relative;
+    display: flex;
+    padding: 1.4rem 6.5rem 2.3rem 6.5rem;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-2 {
+    border-radius: 0.6rem;
+    background: #FFFFFF;
+    position: relative;
+    margin-right: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0 1.3rem 2rem;
+    width: 65.3rem;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-3 {
+    border-radius: 0.6rem;
+    background: #FFFFFF;
+    position: relative;
+    margin: 0 0 2rem 0.6rem;
+    display: flex;
+    flex-direction: row;
+    padding: 0.1rem 0 3.2rem 1.3rem;
+    width: 65.3rem;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-4 {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-5 {
+    margin: 0 0.6rem;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    width: fit-content;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-6 {
+    border-radius: 7.2rem;
+    background: #D9D9D9;
+    position: relative;
+    margin: 0 5.2rem 0.9rem 0;
+    display: flex;
+    padding: 3.3rem 0 3.3rem 1.4rem;
+    width: 14.4rem;
+    height: 14.4rem;
+    box-sizing: border-box;
+}
+
+.frame-2 .container-7 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.comentarios-secoes {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.secao {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f9f9f9;
+}
+
+.secao h3 {
+    margin-top: 0;
+}
+
+.comentario-form {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.comentario-form h3 {
+    margin-top: 0;
+}
+
+.comentario-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comentario-form label {
+    margin-top: 0.5rem;
+}
+
+.comentario-form textarea {
+    margin-top: 0.5rem;
+    resize: vertical;
+}
+
+.comentario-form .estrelas {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.comentario-form .estrelas input {
+    display: none;
+}
+
+.comentario-form .estrelas label {
+    cursor: pointer;
+}
+
+.comentario-form .estrelas label:before {
+    content: '★';
+    font-size: 2rem;
+    color: #ccc;
+}
+
+.comentario-form .estrelas input:checked ~ label:before {
+    color: gold;
+}
+
+.comentario-form .estrelas input:hover ~ label:before {
+    color: gold;
+}
+
+.comentario-form button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comentario-form button:hover {
+    background: #555;
+}

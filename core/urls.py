@@ -5,7 +5,7 @@ from .views import (
     PrecoCombustivelViewSet, FotoVerificacaoViewSet, AvaliacaoViewSet, ComentarioViewSet,
     BorrachariaViewSet, OficinaMecanicaViewSet, home_view, discounts_view, register_view,
     login_view, logout_view, PostosListView, DescontosListView, capture_image, emergency_view,locator_view, neighborhood_discovery_view, 
-    mapa_simples_view, travel_times_view, address_selection_view, profile_user_view
+    mapa_simples_view, travel_times_view, address_selection_view, profile_user_view, posto_profile_view, submit_comment
 )
 
 router = DefaultRouter()
@@ -38,4 +38,6 @@ urlpatterns = [
     path('travel-times/', travel_times_view, name='travel_times'),
     path('address-selection/', address_selection_view, name='address_selection'),
     path('profile-user/', profile_user_view, name='profile_user'),
+    path('posto/<int:posto_id>/', posto_profile_view, name='posto_profile'),
+    path('posto/<int:posto_id>/submit_comment/', submit_comment, name='submit_comment'),
 ]
