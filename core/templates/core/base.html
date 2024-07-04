@@ -6,12 +6,53 @@
     <title>{% block title %}GasFinder{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> <!-- Adicionei para garantir que o estilo principal seja aplicado -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
     {% block extra_css %}{% endblock %}
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "n28v28exx0");
+    </script>
 </head>
 <body>
-    {% include 'core/header.html' %}
-    {% block content %}{% endblock %}
+    <header>
+        <nav class="left">
+            <ul>
+                <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
+                <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
+            </ul>
+        </nav>
+        <h1 class="logo">GasFinder</h1>
+        <nav class="right">
+            <ul>
+                {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a class="login-icon" href="javascript:void(0);">
+                            <img src="{% static 'assets/images/loginIcone.png' %}" alt="Login Icon">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile_user' %}">Exibir perfil</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a class="login-button" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2023 GasFinder. Todos os direitos reservados.</p>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loginIcon = document.querySelector('.login-icon');

@@ -1,4 +1,4 @@
-/* styles.css */
+/* profilePostos.css */
 body, html {
     margin: 0;
     padding: 0;
@@ -6,19 +6,36 @@ body, html {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    background-color: #333333; /* Cor de fundo principal */
+}
+
+header {
+    background: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 2rem;
+    font-family: 'Secular One', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed; /* Fixar no topo */
+    top: 0;
+    left: 0;
+    margin: 0; /* Remover qualquer margem */
+    z-index: 1000; /* Certificar-se de que está acima de outros elementos */
 }
 
 .frame-2 {
-    background: #FFFFFF;
-    padding: 0 2.1rem 2.1rem 1.8rem;
+    background: #555555; /* Cor de fundo do container principal */
+    padding: 5rem 2.1rem 2.1rem 2.1rem; /* Ajuste o padding superior para abaixar o conteúdo */
     width: 93.8rem;
     box-sizing: border-box;
+    margin: 80px auto 0; /* Adicionar margem superior para o conteúdo não ficar embaixo do header */
 }
 
 .frame-2 .nome-do-posto {
-    margin: 0 5.2rem 11.6rem 0;
-    display: inline-block;
-    overflow-wrap: break-word;
+    margin: 0 auto 1.6rem;
+    text-align: center;
     font-family: 'Secular One';
     font-weight: 400;
     font-size: 3rem;
@@ -26,187 +43,233 @@ body, html {
 }
 
 .frame-2 .posto-icone-3 {
-    background: url('{% static "assets/images/posto_icone_2.png" %}') 50% / cover no-repeat;
+    background: url('../assets/images/PostoIcone.png') 50% / cover no-repeat;
     width: 7.1rem;
     height: 7.8rem;
+    margin: 0 auto;
 }
 
 .frame-2 .estrelas-2 {
-    background: url('{% static "assets/images/estrelas_2.png" %}') 50% / cover no-repeat;
-    position: absolute;
-    top: 19.8rem;
-    right: 33.6rem;
-    width: 21.4rem;
-    height: 8.2rem;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
 }
 
-.frame-2 .comentrios {
-    margin: 0.6rem 2.2rem 0 0;
-    display: inline-block;
-    overflow-wrap: break-word;
+.estrelas-2 img {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.1rem;
+    cursor: pointer;
+}
+
+.frame-2 .comentarios-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.comentarios-section h2 {
     font-family: 'Secular One';
-    font-weight: 400;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #FFFFFF;
+    margin-bottom: 2rem;
 }
 
-.frame-2 .correto-icone-1 {
-    background: url('{% static "assets/images/correto_icone_1.png" %}') 50% / cover no-repeat;
-    margin: 0.4rem 0 0.5rem 0;
-    width: 4.3rem;
-    height: 4.1rem;
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    margin: 1rem 0;
 }
 
-.frame-2 .lampada-icone-1 {
-    background: url('{% static "assets/images/lampada_icone.png" %}') 50% / cover no-repeat;
-    margin: 0.3rem 0.8rem 0.3rem 0;
-    width: 5.1rem;
-    height: 4.4rem;
-}
-
-.frame-2 .xicone-1 {
-    background: url('{% static "assets/images/xicone_1.png" %}') 50% / cover no-repeat;
-    margin-bottom: 0.1rem;
-    width: 4.5rem;
-    height: 4.9rem;
-}
-
-.frame-2 .login-icone-1 {
-    background: url('{% static "assets/images/login_icone_1.png" %}') 50% / cover no-repeat;
-    margin: 0 0.8rem 2.3rem 0;
-    width: 4.6rem;
-    height: 5.3rem;
-}
-
-.frame-2 .nome-usurio {
-    margin-bottom: 0.9rem;
-    display: inline-block;
-    align-self: flex-start;
-    overflow-wrap: break-word;
-    font-family: 'Secular One';
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: #000000;
-}
-
-.frame-2 .comentrio {
-    overflow-wrap: break-word;
-    font-family: 'Secular One';
-    font-weight: 400;
-    font-size: 2rem;
-    color: #000000;
-}
-
-.frame-2 .comentrio-1 {
-    overflow-wrap: break-word;
-    font-family: 'Secular One';
-    font-weight: 400;
-    font-size: 2rem;
-    color: #000000;
-}
-
-.frame-2 .login-icone-2 {
-    background: url('{% static "assets/images/login_icone_1.png" %}') 50% / cover no-repeat;
-    margin: 0 0.8rem 2.3rem 0;
-    width: 4.6rem;
-    height: 5.3rem;
-}
-
-.frame-2 .nome-usurio-1 {
-    margin-bottom: 0.9rem;
-    display: inline-block;
-    align-self: flex-start;
-    overflow-wrap: break-word;
-    font-family: 'Secular One';
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: #000000;
-}
-
-.frame-2 .container {
-    border-radius: 0.6rem;
-    background: #D9D9D9;
-    position: relative;
+.tab {
+    padding: 1rem;
+    background: #ccc;
+    border-radius: 5px 5px 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 3.3rem 0 2.6rem;
-    width: fit-content;
-    box-sizing: border-box;
 }
 
-.frame-2 .container-1 {
-    margin-top: 1.6rem;
+.tab.active {
+    background: #eee;
+    border-bottom: 2px solid #fff;
+}
+
+.tab img {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tab span {
+    font-size: 1rem;
+    font-family: 'Secular One';
+    color: #000000;
+    font-weight: bold;
+}
+
+.tab-contents {
+    border: 1px solid #D9D9D9; /* Cor ao redor do retângulo de comentários */
+    border-radius: 0 5px 5px 5px;
+    padding: 1rem;
+    background-color: #D9D9D9; /* Fundo cinza escuro */
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
+    align-items: center;
+    max-height: 40rem; /* Altura máxima para a seção de comentários */
+    overflow-y: auto; /* Adicionar barra de rolagem quando necessário */
+    scrollbar-width: none; /* Para Firefox */
 }
 
-.frame-2 .registrar {
+.tab-contents::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari e Opera */
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+}
+
+.tab-content.active {
+    display: block;
+    width: 100%;
+}
+
+.comentario {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+    background: #FFFFFF; /* Comentário em branco */
+    padding: 1rem;
+    border-radius: 0.6rem;
+    width: 80%; /* Ajustar conforme necessário */
+}
+
+.login-icone-1 {
+    background: url('../assets/images/loginIcone.png') 50% / cover no-repeat;
+    width: 4.6rem;
+    height: 5.3rem;
+    margin-right: 1rem;
+}
+
+.container-4 {
+    display: flex;
+    flex-direction: column;
+}
+
+.nome-usuario {
+    margin-bottom: 0.9rem;
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.comentario-text {
+    overflow-wrap: break-word;
+    font-family: 'Secular One';
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+/* Styles for user-rating and average-rating */
+.user-rating, .average-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-rating p, .average-rating p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #000000;
+}
+
+/* Styles for the comment form */
+.comentario-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-group label {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+}
+
+.form-group textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    resize: vertical;
+}
+
+.comentario-form button {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.comentario-form button:hover {
+    background-color: #555555;
+}
+
+.comment-container {
+    background-color: #D9D9D9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+.comment-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-container textarea {
+    width: 100%;
     border-radius: 0.3rem;
-    background: #555555;
-    position: relative;
-    display: flex;
-    padding: 1.4rem 6.5rem 2.3rem 6.5rem;
-    box-sizing: border-box;
+    padding: 0.5rem;
+    resize: none;
+    border: 1px solid #ccc;
 }
 
-.frame-2 .container-2 {
-    border-radius: 0.6rem;
-    background: #FFFFFF;
-    position: relative;
-    margin-right: 0.6rem;
-    display: flex;
-    flex-direction: row;
-    padding: 0.5rem 0 1.3rem 2rem;
-    width: 65.3rem;
-    box-sizing: border-box;
+.comment-container button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #333333;
+    color: white;
+    border-radius: 0.3rem;
+    cursor: pointer;
 }
 
-.frame-2 .container-3 {
-    border-radius: 0.6rem;
-    background: #FFFFFF;
-    position: relative;
-    margin: 0 0 2rem 0.6rem;
-    display: flex;
-    flex-direction: row;
-    padding: 0.1rem 0 3.2rem 1.3rem;
-    width: 65.3rem;
-    box-sizing: border-box;
+.comment-container button:hover {
+    background-color: #444444;
 }
 
-.frame-2 .container-4 {
-    margin-top: 1.6rem;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-.frame-2 .container-5 {
-    margin: 0 0.6rem;
-    display: flex;
-    flex-direction: row;
-    align-self: flex-start;
-    width: fit-content;
-    box-sizing: border-box;
-}
-
-.frame-2 .container-6 {
-    border-radius: 7.2rem;
-    background: #D9D9D9;
-    position: relative;
-    margin: 0 5.2rem 0.9rem 0;
-    display: flex;
-    padding: 3.3rem 0 3.3rem 1.4rem;
-    width: 14.4rem;
-    height: 14.4rem;
-    box-sizing: border-box;
-}
-
-.frame-2 .container-7 {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
+.form-group label {
+    color: #000000;
 }

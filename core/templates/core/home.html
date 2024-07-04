@@ -107,6 +107,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer; /* Adiciona cursor para indicar que é clicável */
+            transition: background-color 0.3s, transform 0.3s; /* Adiciona transição suave */
+         }
+
+        .filter-option:hover {
+            background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+            transform: scale(1.1); /* Aumenta ligeiramente o tamanho */
         }
 
         .filter-icon {
@@ -189,6 +196,8 @@
             color: #FFA500 !important;
             margin-top: 0.2rem !important;
             margin-bottom: 0.2rem !important;
+            color: #FFA500; /* cor das estrelas */
+            font-size: 0.9rem; /* tamanho das estrelas */
         }
 
         .station-price-distance {
@@ -249,145 +258,166 @@
     <script>
         let map, userMarker, directionsService, directionsRenderer;
 
-        function initMap() {
-            directionsService = new google.maps.DirectionsService();
-            directionsRenderer = new google.maps.DirectionsRenderer();
+function initMap() {
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
 
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 14,
-            });
-            directionsRenderer.setMap(map);
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+    });
+    directionsRenderer.setMap(map);
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    map.setCenter(pos);
-                    userMarker = new google.maps.Marker({
-                        position: pos,
-                        map: map,
-                        title: "Sua Posição",
-                        icon: {
-                            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-                        }
-                    });
-
-                    // Adiciona os postos no mapa
-                    fetchPostos();
-
-                }, () => {
-                    handleLocationError(true, map.getCenter());
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, map.getCenter());
-            }
-        }
-
-        function handleLocationError(browserHasGeolocation, pos) {
-            const infoWindow = new google.maps.InfoWindow({
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            map.setCenter(pos);
+            userMarker = new google.maps.Marker({
                 position: pos,
-                content: browserHasGeolocation ?
-                    'Erro: O serviço de geolocalização falhou.' :
-                    'Erro: Seu navegador não suporta geolocalização.'
+                map: map,
+                title: "Sua Posição",
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                }
             });
-            infoWindow.open(map);
-        }
 
-        function fetchPostos() {
-            fetch('/api/postos/')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(posto => {
-                        const marker = new google.maps.Marker({
-                            position: {lat: parseFloat(posto.localizacao__latitude), lng: parseFloat(posto.localizacao__longitude)},
-                            map: map,
-                            title: posto.nome
-                        });
+            // Adiciona os postos no mapa
+            fetchPostos(pos.lat, pos.lng);
 
-                        marker.addListener('click', () => {
-                            calculateAndDisplayRoute(marker.position);
-                        });
+        }, () => {
+            handleLocationError(true, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, map.getCenter());
+    }
+}
 
-                        const stationItem = document.createElement('div');
-                        stationItem.className = 'station';
-                        stationItem.innerHTML = `
-                            <div class="station-details">
-                                <img src="{% static 'assets/images/PostoIcone.png' %}" class="station-image" alt="Posto">
-                                <div class="station-info">
-                                    <span class="station-name">${posto.nome}</span>
-                                    <div class="station-rating"><span>★ ★ ★ ☆ ☆</span></div>
-                                    <div class="station-price-distance">
-                                        <span class="station-price">${posto.desconto}</span>
-                                        <span class="station-distance">${posto.localizacao__latitude}, ${posto.localizacao__longitude}</span>
-                                    </div>
-                                </div>
-                                <div class="three-dots">•••</div>
-                                <div class="dropdown-menu">
-                                    <a href="{% url 'profilePostos' %}">Perfil do Posto</a>
-                                </div>
-                            </div>
-                        `;
-                        stationItem.addEventListener('click', () => {
-                            map.setCenter(marker.position);
-                            calculateAndDisplayRoute(marker.position);
-                        });
+function handleLocationError(browserHasGeolocation, pos) {
+    const infoWindow = new google.maps.InfoWindow({
+        position: pos,
+        content: browserHasGeolocation ?
+            'Erro: O serviço de geolocalização falhou.' :
+            'Erro: Seu navegador não suporta geolocalização.'
+    });
+}
 
-                        const threeDots = stationItem.querySelector('.three-dots');
-                        const dropdownMenu = stationItem.querySelector('.dropdown-menu');
+function fetchPostos(lat, lng, orderBy='preco') {
+    fetch(`/api/postos/?lat=${lat}&lng=${lng}&order_by=${orderBy}`)
+        .then(response => response.json())
+        .then(data => {
+            const postosListElement = document.getElementById('postos-list');
+            postosListElement.innerHTML = '';  // Clear the list
 
-                        threeDots.addEventListener('click', (event) => {
-                            event.stopPropagation(); // Impede que o clique se propague para outros elementos
-                            dropdownMenu.classList.toggle('show');
-                        });
-
-                        document.addEventListener('click', (event) => {
-                            if (!threeDots.contains(event.target)) {
-                                dropdownMenu.classList.remove('show');
-                            }
-                        });
-
-                        document.getElementById('postos-list').appendChild(stationItem);
-                    });
+            data.forEach(posto => {
+                const marker = new google.maps.Marker({
+                    position: {lat: parseFloat(posto.latitude), lng: parseFloat(posto.longitude)},
+                    map: map,
+                    title: posto.nome
                 });
-        }
 
-        function calculateAndDisplayRoute(destination) {
-            if (!userMarker) return;
+                marker.addListener('click', () => {
+                    calculateAndDisplayRoute(marker.position);
+                });
 
-            directionsService.route(
-                {
-                    origin: userMarker.getPosition(),
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING
-                },
-                (response, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(response);
-                    } else {
-                        window.alert('Directions request failed due to ' + status);
+                const stationItem = document.createElement('div');
+                stationItem.className = 'station';
+                stationItem.innerHTML = `
+                    <div class="station-details">
+                        <img src="{% static 'assets/images/PostoIcone.png' %}" class="station-image" alt="Posto">
+                        <div class="station-info">
+                            <span class="station-name">${posto.nome}</span>
+                            <div class="station-rating">${renderStars(posto.media_avaliacoes)}</div>
+                            <div class="station-price-distance">
+                                <span class="station-price">R$ ${posto.preco}</span>
+                                <span class="station-distance">${posto.distancia} km</span>
+                            </div>
+                        </div>
+                        <div class="three-dots">•••</div>
+                        <div class="dropdown-menu">
+                            <a href="/posto/${posto.id}/">Perfil do Posto</a>
+                        </div>
+                    </div>
+                `;
+                stationItem.addEventListener('click', () => {
+                    map.setCenter(marker.position);
+                    calculateAndDisplayRoute(marker.position);
+                });
+
+                const threeDots = stationItem.querySelector('.three-dots');
+                const dropdownMenu = stationItem.querySelector('.dropdown-menu');
+
+                threeDots.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Impede que o clique se propague para outros elementos
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!threeDots.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
                     }
-                }
-            );
-        }
+                });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginIcon = document.querySelector('.login-icon');
-            const dropdownContent = document.querySelector('.dropdown-content');
-
-            loginIcon.addEventListener('click', function(event) {
-                event.stopPropagation(); // Impede que o clique se propague para outros elementos
-                dropdownContent.classList.toggle('show');
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!loginIcon.contains(event.target)) {
-                    dropdownContent.classList.remove('show');
-                }
+                postosListElement.appendChild(stationItem);
             });
         });
+}
+
+function renderStars(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    return '★'.repeat(fullStars) + '☆'.repeat(halfStar) + '☆'.repeat(emptyStars);
+}
+
+function calculateAndDisplayRoute(destination) {
+    if (!userMarker) return;
+
+    directionsService.route(
+        {
+            origin: userMarker.getPosition(),
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING
+        },
+        (response, status) => {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        }
+    );
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loginIcon = document.querySelector('.login-icon');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    loginIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique se propague para outros elementos
+        dropdownContent.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!loginIcon.contains(event.target)) {
+            dropdownContent.classList.remove('show');
+        }
+    });
+
+    // Event listeners for filter buttons
+    document.querySelector('.filter-option img[alt="Filtro Preço"]').addEventListener('click', () => {
+        const userPosition = userMarker.getPosition();
+        fetchPostos(userPosition.lat(), userPosition.lng(), 'preco');
+    });
+
+    document.querySelector('.filter-option img[alt="Filtro Distância"]').addEventListener('click', () => {
+        const userPosition = userMarker.getPosition();
+        fetchPostos(userPosition.lat(), userPosition.lng(), 'distancia');
+    });
+});
     </script>
 </head>
 <body>
@@ -396,7 +426,6 @@
             <ul>
                 <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
                 <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
-                <li><a class="menu-item" href="{% url 'profilePostos' %}">Perfil Postos</a></li>
             </ul>
         </nav>
         <h1 class="logo">GasFinder</h1>

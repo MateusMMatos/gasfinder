@@ -64,7 +64,14 @@ WSGI_APPLICATION = 'gasfinder.wsgi.application'
 
 # Configuração do banco de dados
 DATABASES = {
-    'default': dj_database_url.parse('postgres://u5m0ibhkk67ska:p1c5a61ac3492c14fad2f33f3fe8ec56535e05a7fc8f615b13912a35f9a2be54d@ccpa7stkruda3o.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dclg0l620mbpn2')
+    'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'GasFinder',
+    'USER': 'mateus',
+    'PASSWORD': '12d@#4030',
+    'HOST': 'localhost',
+    'PORT': '5432',
+}
 }
 
 # Validação de senha
@@ -74,6 +81,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -96,6 +106,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Definição do campo auto increment padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Configuração para o Heroku
 django_heroku.settings(locals())

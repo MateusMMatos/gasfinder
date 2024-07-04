@@ -30,6 +30,7 @@ class PostoCombustivel(models.Model):
     nome = models.CharField(max_length=100)
     cnpj = models.CharField(max_length=20, unique=True)
     localizacao = models.ForeignKey(Localizacao, on_delete=models.CASCADE)
+    average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)  # Novo campo
 
     def __str__(self):
         return self.nome
@@ -48,17 +49,16 @@ class PrecoCombustivel(models.Model):
 
     def __str__(self):
         return f"{self.posto} - {self.tipo_combustivel} - {self.valor}"
-    
+
 class FotoVerificacao(models.Model):
     imagem = models.ImageField(upload_to='verificacoes/', null=True, blank=True)
     data_hora_upload = models.DateTimeField(auto_now_add=True)
     preco = models.ForeignKey(PrecoCombustivel, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  # Adicione default aqui
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     verificado = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.preco} - {self.imagem}"
-
 
 class Borracharia(models.Model):
     nome = models.CharField(max_length=100)
@@ -85,7 +85,6 @@ class Avaliacao(models.Model):
     def __str__(self):
         return f"{self.usuario} - {self.nota}"
 
-
 class Comentario(models.Model):
     TIPO_COMENTARIO_CHOICES = [
         ('elogio', 'Elogio'),
@@ -96,7 +95,7 @@ class Comentario(models.Model):
     posto = models.ForeignKey(PostoCombustivel, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=10, choices=TIPO_COMENTARIO_CHOICES)
     texto = models.TextField()
-    avaliacao = models.IntegerField()
+    avaliacao = models.IntegerField(null=True, blank=True)  # Permitir valores nulos
     data_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

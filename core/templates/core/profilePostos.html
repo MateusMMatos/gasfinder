@@ -9,8 +9,118 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
     <script>
-        // Adicionar script para lidar com clique no ícone de login
         document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.user-rating img');
+            const ratingInput = document.querySelector('input[name="avaliacao"]');
+
+            stars.forEach((star, index) => {
+                if (index < {{ user_rating }}) {
+                    star.src = "{% static 'assets/images/estrelaFull.png' %}";
+                }
+                star.addEventListener('click', () => {
+                    ratingInput.value = index + 1;
+                    updateStars(index);
+                    submitRating(index + 1);
+                });
+            });
+
+            function updateStars(index) {
+                stars.forEach((star, i) => {
+                    star.src = i <= index ? "{% static 'assets/images/estrelaFull.png' %}" : "{% static 'assets/images/estrelaVazia.png' %}";
+                });
+            }
+
+            function submitRating(rating) {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                fetch("{% url 'submit_rating' posto.id %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                        avaliacao: rating
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                }).then(data => {
+                    if (data.status === 'success') {
+                        updateAverageRating(data.average_rating);
+                    }
+                }).catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            }
+
+            function updateAverageRating(averageRating) {
+                const averageStars = document.querySelectorAll('.average-rating img');
+                averageStars.forEach((star, i) => {
+                    star.src = i < averageRating ? "{% static 'assets/images/estrelaFull.png' %}" : "{% static 'assets/images/estrelaVazia.png' %}";
+                });
+            }
+
+            const commentTabs = document.querySelectorAll('.tab');
+            const commentForm = document.querySelector('.comentario-form');
+            const commentTypeInput = document.querySelector('input[name="comentario_tipo"]');
+
+            commentTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    commentTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const tabType = tab.dataset.tab;
+                    commentTypeInput.value = tabType;
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.querySelector(`.tab-content.${tabType}`).classList.add('active');
+                });
+            });
+
+            commentForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(commentForm);
+                const csrfToken = formData.get('csrfmiddlewaretoken');
+
+                fetch(commentForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                }).then(data => {
+                    if (data.status === 'success') {
+                        addCommentToTab(data.usuario, data.texto, data.tipo);
+                    }
+                }).catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            });
+
+            function addCommentToTab(usuario, texto, tipo) {
+                const commentContainer = document.querySelector(`#${tipo}-comments`);
+                const newComment = document.createElement('div');
+                newComment.classList.add('comentario');
+                newComment.innerHTML = `
+                    <div class="login-icone-1"></div>
+                    <div class="container-4">
+                        <div class="nome-usuario">${usuario}</div>
+                        <div class="comentario-text">${texto}</div>
+                    </div>
+                `;
+                commentContainer.appendChild(newComment);
+            }
+        });
+
+               // Adicionar script para lidar com clique no ícone de login
+                document.addEventListener('DOMContentLoaded', function() {
             const loginIcon = document.querySelector('.login-icon');
             const dropdownContent = document.querySelector('.dropdown-content');
 
@@ -23,8 +133,8 @@
                 if (!loginIcon.contains(event.target)) {
                     dropdownContent.classList.remove('show');
                 }
+            }); 
             });
-        });
     </script>
 </head>
 <body>
@@ -61,26 +171,93 @@
                     <div class="posto-icone-3"></div>
                 </div>
                 <div class="nome-do-posto">{{ posto.nome }}</div>
-                <div class="container-5">
-                    <div class="comentarios">Comentários</div>
-                    <div class="correto-icone-1"></div>
-                    <div class="lampada-icone-1"></div>
-                    <div class="xicone-1"></div>
+                <div class="average-rating">
+                    <p>Média Geral</p>
+                    <div class="estrelas-2">
+                        {% for i in "12345" %}
+                            <img src="{% static 'assets/images/estrelaVazia.png' %}" alt="Star" {% if i <= average_rating|stringformat:"d" %} src="{% static 'assets/images/estrelaFull.png' %}" {% else %} src="{% static 'assets/images/estrelaVazia.png' %}" {% endif %}>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="container">
-                    {% for comentario in comentarios %}
-                    <div class="container-3">
-                        <div class="login-icone-1"></div>
-                        <div class="container-4">
-                            <div class="nome-usuario">{{ comentario.usuario.username }}</div>
-                            <span class="comentario">{{ comentario.texto }}</span>
+                <div class="user-rating">
+                    <p>Sua Nota</p>
+                    <div class="estrelas-2">
+                        {% for i in "12345" %}
+                            <img src="{% static 'assets/images/estrelaVazia.png' %}" alt="Star" {% if i <= user_rating|stringformat:"d" %} src="{% static 'assets/images/estrelaFull.png' %}" {% else %} src="{% static 'assets/images/estrelaVazia.png' %}" {% endif %}>
+                        {% endfor %}
+                    </div>
+                </div>
+                <form id="rating-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="avaliacao" value="{{ user_rating }}">
+                </form>
+                <div class="comentarios-section">
+                    <div class="tabs">
+                        <div class="tab elogio-tab active" data-tab="elogio">
+                            <div class="tab-icon"><img src="{% static 'assets/images/corretoIcone.png' %}" alt="Elogio"></div>
+                            <div class="tab-count">{{ elogios|length }}</div>
+                            <span>Elogios</span>
+                        </div>
+                        <div class="tab sugestao-tab" data-tab="sugestao">
+                            <div class="tab-icon"><img src="{% static 'assets/images/lampadaIcone.png' %}" alt="Sugestão"></div>
+                            <div class="tab-count">{{ sugestoes|length }}</div>
+                            <span>Sugestões</span>
+                        </div>
+                        <div class="tab reclamacao-tab" data-tab="reclamacao">
+                            <div class="tab-icon"><img src="{% static 'assets/images/xIcone.png' %}" alt="Reclamação"></div>
+                            <div class="tab-count">{{ reclamacoes|length }}</div>
+                            <span>Reclamações</span>
                         </div>
                     </div>
-                    {% endfor %}
+                    <div class="comment-container">
+                        <form class="comentario-form" action="{% url 'submit_comment' posto.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="comentario_tipo" value="elogio">
+                            <div class="form-group">
+                                <label for="comentario">Comentário</label>
+                                <textarea name="comentario" id="comentario" rows="4" required></textarea>
+                            </div>
+                            <button type="submit">Enviar Comentário</button>
+                        </form>
+                    </div>
+                    <div class="tab-contents">
+                        <div id="elogio-comments" class="tab-content elogio active">
+                            {% for comentario in elogios %}
+                                <div class="comentario">
+                                    <div class="login-icone-1"></div>
+                                    <div class="container-4">
+                                        <div class="nome-usuario">{{ comentario.usuario.username }}</div>
+                                        <div class="comentario-text">{{ comentario.texto }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="sugestao-comments" class="tab-content sugestao">
+                            {% for comentario in sugestoes %}
+                                <div class="comentario">
+                                    <div class="login-icone-1"></div>
+                                    <div class="container-4">
+                                        <div class="nome-usuario">{{ comentario.usuario.username }}</div>
+                                        <div class="comentario-text">{{ comentario.texto }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="reclamacao-comments" class="tab-content reclamacao">
+                            {% for comentario in reclamacoes %}
+                                <div class="comentario">
+                                    <div class="login-icone-1"></div>
+                                    <div class="container-4">
+                                        <div class="nome-usuario">{{ comentario.usuario.username }}</div>
+                                        <div class="comentario-text">{{ comentario.texto }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="estrelas-2"></div>
         </div>
-    </div>
+    </div>    
 </body>
 </html>

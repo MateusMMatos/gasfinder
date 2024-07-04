@@ -18,25 +18,30 @@
         <div class="registrar-se-em-gas-finder">Registrar-se em GasFinder</div>
         <form method="post">
             {% csrf_token %}
+            {{ form.non_field_errors }}
             <div class="input-group">
                 <input type="text" name="username" id="username" required placeholder=" ">
                 <label for="username">*Nome de Usuário</label>
                 <div class="line-4"></div>
+                <div class="error">{{ form.username.errors }}</div>
             </div>
             <div class="input-group">
                 <input type="email" name="email" id="email" required placeholder=" ">
                 <label for="email">*Email</label>
                 <div class="line-1"></div>
+                <div class="error">{{ form.email.errors }}</div>
             </div>
             <div class="input-group">
                 <input type="password" name="password1" id="password1" required placeholder=" ">
                 <label for="password1">*Senha</label>
                 <div class="line-2"></div>
+                <div class="error">{{ form.password1.errors }}</div>
             </div>
             <div class="input-group">
                 <input type="password" name="password2" id="password2" required placeholder=" ">
                 <label for="password2">*Confirmar Senha</label>
                 <div class="line-3"></div>
+                <div class="error">{{ form.password2.errors }}</div>
             </div>
             <button type="submit" class="container"><span class="registrar-se">Registrar-se</span></button>
         </form>
