@@ -1,13 +1,12 @@
 from rest_framework import viewsets
 from .models import (
     Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
-    PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
-    Borracharia, OficinaMecanica, Desconto, CodigoDesconto, HistoricoAbastecimento
+    PrecoCombustivel, Avaliacao, Comentario, HistoricoAbastecimento
 )
 from .serializers import (
     CidadeSerializer, LocalizacaoSerializer, UsuarioSerializer, PostoCombustivelSerializer,
-    TipoCombustivelSerializer, PrecoCombustivelSerializer, FotoVerificacaoSerializer,
-    AvaliacaoSerializer, ComentarioSerializer, BorrachariaSerializer, OficinaMecanicaSerializer
+    TipoCombustivelSerializer, PrecoCombustivelSerializer, AvaliacaoSerializer,
+    ComentarioSerializer
 )
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -50,10 +49,6 @@ class PrecoCombustivelViewSet(viewsets.ModelViewSet):
     queryset = PrecoCombustivel.objects.all()
     serializer_class = PrecoCombustivelSerializer
 
-class FotoVerificacaoViewSet(viewsets.ModelViewSet):
-    queryset = FotoVerificacao.objects.all()
-    serializer_class = FotoVerificacaoSerializer
-
 class AvaliacaoViewSet(viewsets.ModelViewSet):
     queryset = Avaliacao.objects.all()
     serializer_class = AvaliacaoSerializer
@@ -61,14 +56,6 @@ class AvaliacaoViewSet(viewsets.ModelViewSet):
 class ComentarioViewSet(viewsets.ModelViewSet):
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
-
-class BorrachariaViewSet(viewsets.ModelViewSet):
-    queryset = Borracharia.objects.all()
-    serializer_class = BorrachariaSerializer
-
-class OficinaMecanicaViewSet(viewsets.ModelViewSet):
-    queryset = OficinaMecanica.objects.all()
-    serializer_class = OficinaMecanicaSerializer
 
 class PostosListView(View):
     def get(self, request, *args, **kwargs):
@@ -101,11 +88,6 @@ class PostosListView(View):
 
         return JsonResponse(postos_list, safe=False)
     
-class DescontosListView(View):
-    def get(self, request, *args, **kwargs):
-        descontos = Desconto.objects.all().values('posto__nome', 'percentual', 'descricao')
-        return JsonResponse(list(descontos), safe=False)
-
 def custom_404(request, exception):
     return render(request, 'core/404.html', status=404)
 
@@ -118,13 +100,6 @@ def home_view(request):
         'postos': postos,
     }
     return render(request, 'home.html', context)
-
-def discounts_view(request):
-    descontos = Desconto.objects.all()
-    context = {
-        'descontos': descontos,
-    }
-    return render(request, 'discounts.html', context)
 
 def register_view(request):
     if request.method == 'POST':
@@ -177,17 +152,6 @@ def profile_user_view(request):
         'historico': historico,
     }
     return render(request, 'core/profileUser.html', context)
-
-@csrf_exempt
-def capture_image(request):
-    if request.method == 'POST':
-        imagem_data = request.POST.get('imagem')
-        format, imgstr = imagem_data.split(';base64,') 
-        ext = format.split('/')[-1] 
-        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-        FotoVerificacao.objects.create(imagem=data)
-        return redirect('home')
-    return render(request, 'capture_image.html')
 
 @login_required
 @require_POST
@@ -257,19 +221,3 @@ def profile_postos_view(request):
         'postos': postos,
     }
     return render(request, 'core/profilePostos.html', context)
-
-@login_required
-def submit_comment(request, posto_id):
-    if request.method == 'POST':
-        posto = get_object_or_404(PostoCombustivel, pk=posto_id)
-        tipo = request.POST.get('comentario_tipo')
-        texto = request.POST.get('comentario')
-        avaliacao = request.POST.get('avaliacao')
-        Comentario.objects.create(
-            usuario=request.user,
-            posto=posto,
-            tipo=tipo,
-            texto=texto,
-            avaliacao=avaliacao
-        )
-        return redirect('posto_profile', posto_id=posto_id)

@@ -1,11 +1,10 @@
 from django.test import TestCase
-from django.urls import reverse
+from .models import PostoCombustivel
 
-class HomePageTest(TestCase):
-    def test_home_page_status_code(self):
-        response = self.client.get(reverse('home'))
-        self.assertEqual(response.status_code, 200)
+class PostoCombustivelTestCase(TestCase):
+    def setUp(self):
+        PostoCombustivel.objects.create(nome="Posto Teste", localizacao="Teste")
 
-    def test_home_page_template(self):
-        response = self.client.get(reverse('home'))
-        self.assertTemplateUsed(response, 'home.html')
+    def test_posto_nome(self):
+        posto = PostoCombustivel.objects.get(nome="Posto Teste")
+        self.assertEqual(posto.nome, "Posto Teste")

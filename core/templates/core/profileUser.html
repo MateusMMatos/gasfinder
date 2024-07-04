@@ -9,23 +9,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
     <script>
-        // Adicionar script para lidar com clique no ícone de login
         document.addEventListener('DOMContentLoaded', function() {
-    const loginIcon = document.querySelector('.login-icon');
-    const dropdownContent = document.querySelector('.dropdown-content');
+            const loginIcon = document.querySelector('.login-icon');
+            const dropdownContent = document.querySelector('.dropdown-content');
 
-    loginIcon.addEventListener('click', function(event) {
-        event.stopPropagation(); // Impede que o clique se propague para outros elementos
-        dropdownContent.classList.toggle('show');
-    });
+            loginIcon.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
 
-    document.addEventListener('click', function(event) {
-        if (!loginIcon.contains(event.target)) {
-            dropdownContent.classList.remove('show');
-        }
-    }); 
-    });
-</script>
+            document.addEventListener('click', function(event) {
+                if (!loginIcon.contains(event.target)) {
+                    dropdownContent.classList.remove('show');
+                }
+            }); 
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -62,15 +61,17 @@
             <div class="container-1">
                 {% for item in historico %}
                 <div class="container-3">
-                    <div class="container-5">
-                        <div class="posto-icone-1"></div>
-                        <div class="posto-nome">{{ item.posto.nome }}</div>
-                        <div class="preco">R$ {{ item.preco_combustivel }}</div>
-                    </div>
-                    <div class="container-6">
-                        <div class="data">{{ item.data_hora|date:"d/m/Y" }}</div>
-                        <span class="horario">{{ item.data_hora|date:"H:i:s" }}</span>
-                    </div>
+                    <a href="{% url 'posto_profile' item.posto.id %}" class="posto-link">
+                        <div class="container-5">
+                            <div class="posto-icone-1"></div>
+                            <div class="posto-nome">{{ item.posto.nome }}</div>
+                            <div class="preco">R$ {{ item.preco_combustivel }}</div>
+                        </div>
+                        <div class="container-6">
+                            <div class="data">{{ item.data_hora|date:"d/m/Y" }}</div>
+                            <span class="horario">{{ item.data_hora|date:"H:i:s" }}</span>
+                        </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>

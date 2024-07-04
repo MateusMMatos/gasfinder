@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from .models import (
     Cidade, Localizacao, UsuarioProfile, PostoCombustivel, TipoCombustivel,
-    PrecoCombustivel, FotoVerificacao, Avaliacao, Comentario,
-    Borracharia, OficinaMecanica
+    PrecoCombustivel, Avaliacao, Comentario
 )
 
 class CidadeSerializer(serializers.ModelSerializer):
@@ -35,11 +34,6 @@ class PrecoCombustivelSerializer(serializers.ModelSerializer):
         model = PrecoCombustivel
         fields = '__all__'
 
-class FotoVerificacaoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FotoVerificacao
-        fields = '__all__'
-
 class AvaliacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Avaliacao
@@ -48,14 +42,4 @@ class AvaliacaoSerializer(serializers.ModelSerializer):
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comentario
-        fields = '__all__'
-
-class BorrachariaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Borracharia
-        fields = '__all__'
-
-class OficinaMecanicaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OficinaMecanica
         fields = '__all__'
