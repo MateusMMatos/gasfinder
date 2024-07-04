@@ -1,8 +1,14 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Erro no Servidor{% endblock %}
-
-{% block content %}
-    <h1>500 - Erro no Servidor</h1>
-    <p>Desculpe, algo deu errado no nosso servidor. Por favor, tente novamente mais tarde.</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server Error</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>500 - Server Error</h1>
+    <p>Sorry, something went wrong on our end. Please try again later.</p>
+</body>
+</html>
