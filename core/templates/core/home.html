@@ -145,12 +145,22 @@
             border-radius: 0.3rem !important;
             border: 0.1rem solid #000000 !important;
             margin-bottom: 0.5rem !important; /* Ajuste para espaçamento entre os itens */
+            position: relative; /* Necessário para o dropdown */
+            cursor: pointer; /* Adicionar cursor para mostrar que é clicável */
+            transition: background-color 0.3s, transform 0.3s; /* Transições suaves */
+        }
+
+        .station:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adicionar um leve efeito de sombra ao passar o mouse */
+            background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+            transform: scale(1.02); /* Aumentar ligeiramente o tamanho */
         }
 
         .station-details {
             display: flex !important;
             align-items: center !important;
             width: 100% !important;
+            position: relative; /* Necessário para posicionar os três pontos */
         }
 
         .station-image {
@@ -190,6 +200,50 @@
             font-family: 'Inter', sans-serif !important;
             font-size: 0.9rem !important;
             color: #000000 !important;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 55px; /* Ajuste esta propriedade para subir ou descer o menu */
+            right: 10px;
+            transform: translateY(-50%);
+            background-color: #555;
+            border-radius: 0.25rem;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            padding: 5px;
+        }
+
+        .dropdown-menu a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #777;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .three-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px; /* Ajuste esta propriedade para subir ou descer os três pontos */
+            right: 10px;
         }
     </style>
     <script>
@@ -270,12 +324,31 @@
                                         <span class="station-distance">${posto.localizacao__latitude}, ${posto.localizacao__longitude}</span>
                                     </div>
                                 </div>
+                                <div class="three-dots">•••</div>
+                                <div class="dropdown-menu">
+                                    <a href="{% url 'profilePostos' %}">Perfil do Posto</a>
+                                </div>
                             </div>
                         `;
                         stationItem.addEventListener('click', () => {
                             map.setCenter(marker.position);
                             calculateAndDisplayRoute(marker.position);
                         });
+
+                        const threeDots = stationItem.querySelector('.three-dots');
+                        const dropdownMenu = stationItem.querySelector('.dropdown-menu');
+
+                        threeDots.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Impede que o clique se propague para outros elementos
+                            dropdownMenu.classList.toggle('show');
+                        });
+
+                        document.addEventListener('click', (event) => {
+                            if (!threeDots.contains(event.target)) {
+                                dropdownMenu.classList.remove('show');
+                            }
+                        });
+
                         document.getElementById('postos-list').appendChild(stationItem);
                     });
                 });
@@ -300,22 +373,21 @@
             );
         }
 
-            // Adicionar script para lidar com clique no ícone de login
-            document.addEventListener('DOMContentLoaded', function() {
-        const loginIcon = document.querySelector('.login-icon');
-        const dropdownContent = document.querySelector('.dropdown-content');
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginIcon = document.querySelector('.login-icon');
+            const dropdownContent = document.querySelector('.dropdown-content');
 
-        loginIcon.addEventListener('click', function(event) {
-            event.stopPropagation(); // Impede que o clique se propague para outros elementos
-            dropdownContent.classList.toggle('show');
-        });
+            loginIcon.addEventListener('click', function(event) {
+                event.stopPropagation(); // Impede que o clique se propague para outros elementos
+                dropdownContent.classList.toggle('show');
+            });
 
-        document.addEventListener('click', function(event) {
-            if (!loginIcon.contains(event.target)) {
-                dropdownContent.classList.remove('show');
-            }
+            document.addEventListener('click', function(event) {
+                if (!loginIcon.contains(event.target)) {
+                    dropdownContent.classList.remove('show');
+                }
+            });
         });
-    });
     </script>
 </head>
 <body>
@@ -324,6 +396,7 @@
             <ul>
                 <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
                 <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
+                <li><a class="menu-item" href="{% url 'profilePostos' %}">Perfil Postos</a></li>
             </ul>
         </nav>
         <h1 class="logo">GasFinder</h1>

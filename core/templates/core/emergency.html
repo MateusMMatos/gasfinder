@@ -6,24 +6,50 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/emergency.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Secular+One&display=swap" rel="stylesheet">
+    <script>
+        // Adicionar script para lidar com clique no ícone de login
+        document.addEventListener('DOMContentLoaded', function() {
+    const loginIcon = document.querySelector('.login-icon');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    loginIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique se propague para outros elementos
+        dropdownContent.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!loginIcon.contains(event.target)) {
+            dropdownContent.classList.remove('show');
+        }
+    }); 
+    });
+</script>
 </head>
 <body>
     <header>
-        <nav>
-            <ul style="flex-grow: 1;">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'descontos' %}">Descontos</a></li>
-                <li><a href="{% url 'emergency' %}">Emergência</a></li>
+        <nav class="left">
+            <ul>
+                <li><a class="menu-item" href="{% url 'home' %}">Home</a></li>
+                <li><a class="menu-item" href="{% url 'emergency' %}">Emergência</a></li>
+                <li><a class="menu-item" href="{% url 'profilePostos' %}">Perfil Postos</a></li>
             </ul>
         </nav>
-        <h1>GasFinder</h1>
-        <nav>
+        <h1 class="logo">GasFinder</h1>
+        <nav class="right">
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li class="dropdown">
+                        <a class="login-icon" href="javascript:void(0);">
+                            <img src="{% static 'assets/images/loginIcone.png' %}" alt="Login Icon">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile_user' %}">Exibir perfil</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'registrar' %}">Registrar</a></li>
+                    <li><a class="login-button" href="{% url 'login' %}">Login</a></li>
                 {% endif %}
             </ul>
         </nav>

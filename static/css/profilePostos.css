@@ -26,13 +26,13 @@ body, html {
 }
 
 .frame-2 .posto-icone-3 {
-    background: url('../assets/images/posto_icone_2.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/posto_icone_2.png" %}') 50% / cover no-repeat;
     width: 7.1rem;
     height: 7.8rem;
 }
 
 .frame-2 .estrelas-2 {
-    background: url('../assets/images/estrelas_2.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/estrelas_2.png" %}') 50% / cover no-repeat;
     position: absolute;
     top: 19.8rem;
     right: 33.6rem;
@@ -40,7 +40,7 @@ body, html {
     height: 8.2rem;
 }
 
-.frame-2 .comentarios {
+.frame-2 .comentrios {
     margin: 0.6rem 2.2rem 0 0;
     display: inline-block;
     overflow-wrap: break-word;
@@ -51,34 +51,34 @@ body, html {
 }
 
 .frame-2 .correto-icone-1 {
-    background: url('../assets/images/correto_icone_1.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/correto_icone_1.png" %}') 50% / cover no-repeat;
     margin: 0.4rem 0 0.5rem 0;
     width: 4.3rem;
     height: 4.1rem;
 }
 
 .frame-2 .lampada-icone-1 {
-    background: url('../assets/images/lampada_icone.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/lampada_icone.png" %}') 50% / cover no-repeat;
     margin: 0.3rem 0.8rem 0.3rem 0;
     width: 5.1rem;
     height: 4.4rem;
 }
 
 .frame-2 .xicone-1 {
-    background: url('../assets/images/xicone_1.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/xicone_1.png" %}') 50% / cover no-repeat;
     margin-bottom: 0.1rem;
     width: 4.5rem;
     height: 4.9rem;
 }
 
 .frame-2 .login-icone-1 {
-    background: url('../assets/images/login_icone_1.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/login_icone_1.png" %}') 50% / cover no-repeat;
     margin: 0 0.8rem 2.3rem 0;
     width: 4.6rem;
     height: 5.3rem;
 }
 
-.frame-2 .nome-usuario {
+.frame-2 .nome-usurio {
     margin-bottom: 0.9rem;
     display: inline-block;
     align-self: flex-start;
@@ -89,7 +89,7 @@ body, html {
     color: #000000;
 }
 
-.frame-2 .comentario {
+.frame-2 .comentrio {
     overflow-wrap: break-word;
     font-family: 'Secular One';
     font-weight: 400;
@@ -97,7 +97,7 @@ body, html {
     color: #000000;
 }
 
-.frame-2 .comentario-1 {
+.frame-2 .comentrio-1 {
     overflow-wrap: break-word;
     font-family: 'Secular One';
     font-weight: 400;
@@ -106,13 +106,13 @@ body, html {
 }
 
 .frame-2 .login-icone-2 {
-    background: url('../assets/images/login_icone_1.png') 50% / cover no-repeat;
+    background: url('{% static "assets/images/login_icone_1.png" %}') 50% / cover no-repeat;
     margin: 0 0.8rem 2.3rem 0;
     width: 4.6rem;
     height: 5.3rem;
 }
 
-.frame-2 .nome-usuario-1 {
+.frame-2 .nome-usurio-1 {
     margin-bottom: 0.9rem;
     display: inline-block;
     align-self: flex-start;
@@ -209,90 +209,4 @@ body, html {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-}
-
-.comentarios-secoes {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.secao {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    background: #f9f9f9;
-}
-
-.secao h3 {
-    margin-top: 0;
-}
-
-.comentario-form {
-    margin-top: 2rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-}
-
-.comentario-form h3 {
-    margin-top: 0;
-}
-
-.comentario-form form {
-    display: flex;
-    flex-direction: column;
-}
-
-.comentario-form label {
-    margin-top: 0.5rem;
-}
-
-.comentario-form textarea {
-    margin-top: 0.5rem;
-    resize: vertical;
-}
-
-.comentario-form .estrelas {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.comentario-form .estrelas input {
-    display: none;
-}
-
-.comentario-form .estrelas label {
-    cursor: pointer;
-}
-
-.comentario-form .estrelas label:before {
-    content: '★';
-    font-size: 2rem;
-    color: #ccc;
-}
-
-.comentario-form .estrelas input:checked ~ label:before {
-    color: gold;
-}
-
-.comentario-form .estrelas input:hover ~ label:before {
-    color: gold;
-}
-
-.comentario-form button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    background: #333;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.comentario-form button:hover {
-    background: #555;
 }

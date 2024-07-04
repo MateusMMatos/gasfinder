@@ -177,6 +177,13 @@ def posto_profile_view(request, posto_id):
     }
     return render(request, 'core/posto_profile.html', context)
 
+def profile_postos_view(request):
+    postos = PostoCombustivel.objects.all()
+    context = {
+        'postos': postos,
+    }
+    return render(request, 'core/profilePostos.html', context)
+
 @login_required
 def submit_comment(request, posto_id):
     if request.method == 'POST':
